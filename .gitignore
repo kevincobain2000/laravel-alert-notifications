@@ -1,3 +1,17 @@
 /vendor
 .idea
 composer.lock
+.DS_Store
+/.idea
+/_ide_helper.php
+/node_modules
+/storage/*.key
+/vendor
+/.vagrant
+Homestead.json
+Homestead.yaml
+npm-debug.log
+.env
+.phpintel
+build/
+cache.properties

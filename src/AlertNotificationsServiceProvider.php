@@ -1,10 +1,10 @@
 <?php
 
-namespace Abrigham\LaravelEmailExceptions;
+namespace Kevincobain2000\LaravelAlertNotifications;
 
 use Illuminate\Support\ServiceProvider;
 
-class EmailExceptionsServiceProvider extends ServiceProvider
+class AlertNotificationsServiceProvider extends ServiceProvider
 {
     /**
      * Indicates if loading of the provider is deferred.
@@ -20,13 +20,13 @@ class EmailExceptionsServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->loadViewsFrom(__DIR__.'/views', 'laravelEmailExceptions');
+        $this->loadViewsFrom(__DIR__.'/views', 'laravel_alert_notifications');
 
         $this->publishes([
-            __DIR__.'/config/laravelEmailExceptions.php' => config_path('laravelEmailExceptions.php'),
+            __DIR__.'/config/laravel_alert_notifications.php' => config_path('laravel_alert_notifications.php'),
         ], 'config');
         $this->publishes([
-            __DIR__.'/views' => resource_path('views/vendor/laravelEmailExceptions'),
+            __DIR__.'/views' => resource_path('views/vendor/laravel_alert_notifications'),
         ], 'views');
     }
 
@@ -38,8 +38,8 @@ class EmailExceptionsServiceProvider extends ServiceProvider
     public function register()
     {
         $this->mergeConfigFrom(
-            __DIR__.'/config/laravelEmailExceptions.php',
-            'laravelEmailExceptions'
+            __DIR__.'/config/laravel_alert_notifications.php',
+            'laravel_alert_notifications'
         );
     }
 }

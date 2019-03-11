@@ -8,18 +8,18 @@
 
 <table border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" id="bodyTable">
     <tr>
-        <td align="center" valign="top">
+        <td align="left" valign="top">
             <table border="0" cellpadding="20" cellspacing="0" width="600" id="emailContainer">
                 <tr>
-                    <td align="center" valign="top">
-                        <h3 style="height: 40px; line-height: 40px; background-color: #f56857; color: #ffffff;">There has been an exception thrown on {{ env('APP_URL', 'unknown') }}</h3>
+                    <td align="left" valign="top">
+                        <h3 style="padding-left:5px;height: 40px; line-height: 40px; background-color: #f56857; color: #ffffff;">There has been an exception thrown on {{ config('app.name') }}</h3>
                         <table class="emailExceptionTable" style="text-align: left;" border="0" cellspacing="0" cellpadding="3">
                             <tr>
                                 <td>
                                     <strong>Environment:</strong>
                                 </td>
                                 <td>
-                                    {{ env('APP_ENV', 'unknown') }}
+                                    {{ config('app.env') }}
                                 </td>
                             </tr>
                             <tr>
@@ -55,16 +55,16 @@
                                 </td>
                             </tr>
                         </table>
-                        <hr style="color: #f6f6f6;">
-                        <table align="center" style="text-align: center;" border="0" cellspacing="0" cellpadding="0">
+                        <br>
+                        <table align="left" style="text-align: left;" border="0" cellspacing="0" cellpadding="0">
                             <tr>
                                 <td>
-                                    In {{ $exception->getFile() }} on line {{  $exception->getLine() }}
+                                    In File <b style="color:red;">{{ $exception->getFile() }} on line {{  $exception->getLine() }}</b>
                                 </td>
                             </tr>
                         </table>
-                        <hr style="color: #f6f6f6;">
-                        <table align="center" style="text-align: center;" border="0" cellspacing="0" cellpadding="0">
+                        <br>
+                        <table align="left" style="text-align: left;" border="0" cellspacing="0" cellpadding="0">
                             <tr>
                                 <td>
                                     <strong>Stack Trace:</strong>
@@ -72,7 +72,7 @@
                             </tr>
                             <tr>
                                 <td align="left" style="text-align: left;">
-                                    {!! nl2br($exception->getTraceAsString()) !!}
+                                    <pre style="white-space: pre-wrap;">{{$exception->getTraceAsString()}}</pre>
                                 </td>
                             </tr>
                         </table>
