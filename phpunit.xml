@@ -9,13 +9,13 @@
          processIsolation="false"
          stopOnFailure="false">
     <testsuites>
-        <testsuite name="Abrigham Laravel Email Exceptions Test Suite">
+        <testsuite name="Kevincobain2000 Laravel Alert notifications of Exceptions Test Suite">
             <directory suffix="Test.php">./tests</directory>
         </testsuite>
     </testsuites>
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">./src/Exceptions</directory>
+            <directory suffix=".php">./src/Dispatcher</directory>
         </whitelist>
     </filter>
     <php>

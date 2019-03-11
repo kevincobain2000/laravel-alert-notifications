@@ -1,30 +1,20 @@
 language: php
 
 php:
-  - 5.6
   - 7.0
   - 7.1
+  - 7.2
+  - 7.3
 
 matrix:
   fast_finish: true
-
-  include:
-    - php: 7.0
-      env: PHPCS=1
-
-    - php: 7.0
-      env: COVERAGE=1
-
 
 before_script:
   - composer self-update
   - composer install --prefer-source --no-interaction
 
 script:
-  - if [[ $PHPCS != '1' && $COVERAGE != '1' ]]; then vendor/bin/phpunit; fi
-  - if [[ $PHPCS = 1 ]]; then vendor/bin/phpcs --standard=psr2 --ignore=*vendor*,*src/views* ./; fi
-  - if [[ $COVERAGE = 1 ]]; then vendor/bin/phpunit --coverage-clover=clover.xml; fi
-
+  - ant
 
 after_success:
   - if [[ $COVERAGE = 1 ]]; then bash <(curl -s https://codecov.io/bash); fi
