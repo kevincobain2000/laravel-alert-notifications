@@ -16,8 +16,5 @@ before_script:
 script:
   - ant
 
-after_success:
-  - if [[ $COVERAGE = 1 ]]; then bash <(curl -s https://codecov.io/bash); fi
-
 notifications:
   email: false
