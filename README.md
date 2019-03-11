@@ -1,6 +1,6 @@
 ## Laravel Alert Notifications [![Build Status](https://travis-ci.org/kevincobain2000/laravel-alert-notifications.svg?branch=master)](https://travis-ci.org/kevincobain2000/laravel-alert-notifications)
 
-Send php exceptions to email, microsoft teams, slack (WIP), pager duty (WIP).
+Send php exceptions to email, microsoft teams, slack.
 Notifications are throttle enabled so devs don't get a lot of emails from one host (or all hosts if  cache driver is shared)
 Please check config for more details on throttling.
 
@@ -108,6 +108,5 @@ class Handler extends ExceptionHandler
 
 ### References
 
-1. https://github.com/ebrigham1/cakephp-error-email
-2. https://qiita.com/kidatti/items/8732114ec4d1727844b8
-3. https://laravel-news.com/email-on-error-exceptions
+1. https://qiita.com/kidatti/items/8732114ec4d1727844b8
+2. https://laravel-news.com/email-on-error-exceptions
