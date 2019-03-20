@@ -19,8 +19,8 @@ class ExceptionOccurredPayload
             "attachments" => [
                 [
                     "text"  => "*Environment:* "   . config('app.env') . " " . config('laravel_alert_notifications.slack.subject')
-                        . "\n" . "Request Url: " . Request::fullUrl()
-                        . "\n" . "Exception Message: " . $this->exception->getMessage()
+                       . "\n" . "Request Url: "    . Request::fullUrl()
+                       . "\n" . "Exception Message: " . $this->exception->getMessage()
                        . "\n" . "Exception: "      . get_class($this->exception)
                        . "\n" . "Exception Code: " . $this->exception->getCode()
                        . "\n" . "In File: *"       . $this->exception->getFile() . '* on line ' . $this->exception->getLine()
