@@ -11,6 +11,8 @@ class ExceptionOccurredMail extends Mailable
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    public $exception;
+
     public $view = 'vendor.laravel_alert_notifications.mail';
 
     public function __construct($exception)

@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Request;
 
 class ExceptionOccurredCard
 {
+    public $exception;
+
     public function __construct($exception)
     {
         $this->exception = $exception;
