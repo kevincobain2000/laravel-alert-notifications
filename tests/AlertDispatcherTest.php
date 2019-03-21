@@ -3,7 +3,6 @@ namespace Kevincobain2000\LaravelEmailExceptions\Tests;
 
 use Orchestra\Testbench\TestCase;
 use Exception;
-use BadMethodCallException;
 use Mockery;
 use Mail;
 use Illuminate\Support\Facades\Cache;
@@ -67,12 +66,6 @@ class AlertDispatcherTest extends TestCase
         $this->alertHandlerMock->dontAlertExceptions = [Exception::class];
         $actual = $this->alertHandlerMock->isDonotAlertException();
         $this->assertTrue($actual);
-
-        $actual = $this->alertHandlerMock->isThrottled();
-        $this->assertFalse($actual);
-
-        $actual = $this->alertHandlerMock->getThrottleCacheKey();
-        $this->assertSame('laravel-alert-notifications-test-Exception-0', $actual);
 
         $this->alertHandlerMock
             ->shouldReceive('shouldAlert')

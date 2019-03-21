@@ -4,8 +4,6 @@ namespace Kevincobain2000\LaravelAlertNotifications\Dispatcher;
 use Exception;
 use DateTime;
 
-use Illuminate\Support\Facades\Cache;
-
 use Illuminate\Support\Facades\Mail;
 use Kevincobain2000\LaravelAlertNotifications\Mail\ExceptionOccurredMail;
 
@@ -14,6 +12,8 @@ use Kevincobain2000\LaravelAlertNotifications\MicrosoftTeams\ExceptionOccurredCa
 
 use Kevincobain2000\LaravelAlertNotifications\Slack\Slack;
 use Kevincobain2000\LaravelAlertNotifications\Slack\ExceptionOccurredPayload;
+
+use Kevincobain2000\LaravelAlertNotifications\Dispatcher\ThrottleControl;
 
 class AlertDispatcher
 {
@@ -42,7 +42,8 @@ class AlertDispatcher
         if ($this->isDonotAlertException()) {
             return false;
         }
-        return ! $this->isThrottled();
+
+        return ! ThrottleControl::isThrottled($this->exception);
     }
 
     protected function dispatch()
@@ -83,37 +84,5 @@ class AlertDispatcher
     {
         return config('laravel_alert_notifications.slack.enabled')
             && config('laravel_alert_notifications.slack.webhook');
-    }
-
-    // Check if alert is already sent
-    protected function isThrottled(): bool
-    {
-        $driver = config('laravel_alert_notifications.cache_driver');
-        $key = $this->getThrottleCacheKey();
-
-        if (Cache::store($driver)->has($key)) {
-            return true;
-        }
-
-        Cache::store($driver)->put($key, true, $this->nowAddMinutes());
-
-        return false;
-    }
-
-    private function nowAddMinutes()
-    {
-        $dateTime = new DateTime();
-        $minutesToAdd = config('laravel_alert_notifications.throttle_duration_minutes');
-        $dateTime->modify("+{$minutesToAdd} minutes");
-        return $minutesToAdd;
-    }
-
-    protected function getThrottleCacheKey()
-    {
-        $key = config('laravel_alert_notifications.cache_prefix')
-            .get_class($this->exception)
-            .'-'
-            .$this->exception->getCode();
-        return $key;
     }
 }
