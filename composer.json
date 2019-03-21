@@ -2,7 +2,7 @@
     "name": "kevincobain2000/laravel-alert-notifications",
     "description": "Alert notifications of exceptions from your laravel application",
     "license": "MIT",
-    "version": "2.4",
+    "version": "2.5",
     "keywords": ["email", "exception", "laravel", "laravel-5-package", "exception-handling", "debugging"],
     "authors": [
         {

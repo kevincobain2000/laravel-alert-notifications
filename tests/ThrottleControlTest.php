@@ -34,6 +34,15 @@ class ThrottleControlTest extends TestCase
 
         $actual = ThrottleControl::isThrottled($exception);
         $this->assertTrue($actual);
+
+        $differentException = new BadMethodCallException('message');
+        $actual = ThrottleControl::isThrottled($differentException);
+        $this->assertFalse($actual);
+
+        // crud: do it again
+        $exception = new Exception('message');
+        $actual = ThrottleControl::isThrottled($exception);
+        $this->assertTrue($actual);
     }
 
     public function testGetThrottleCacheKey()
