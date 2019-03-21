@@ -59,7 +59,7 @@
                         <table align="left" style="text-align: left;" border="0" cellspacing="0" cellpadding="0">
                             <tr>
                                 <td>
-                                    In File <b style="color:red;">{{ $exception->getFile() }} on line {{  $exception->getLine() }}</b>
+                                    In File <b style="color:#ff5864;">{{ $exception->getFile() }} on line {{  $exception->getLine() }}</b>
                                 </td>
                             </tr>
                         </table>

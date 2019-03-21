@@ -24,7 +24,7 @@ return [
         'proxy'    => env('ALERT_NOTIFICATION_CURL_PROXY', null),
         'subject'  => '['. env('APP_ENV') . '] [' . trim(`hostname`) . '] ' . env('APP_NAME'),
         'username' => '['. env('APP_ENV') . '] [' . trim(`hostname`) . '] ' . env('APP_NAME'),
-        'emmoji'   => ':slack:',
+        'emoji'    => ':slack:',
         'webhook'  => env('ALERT_NOTIFICATION_SLACK_WEBHOOK', null),
         'channel'  => env('ALERT_NOTIFICATION_SLACK_CHANNEL', null),
         'image'    => null,
