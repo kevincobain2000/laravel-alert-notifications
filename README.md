@@ -72,7 +72,8 @@ class Handler extends ExceptionHandler
     public function report(Exception $exception)
     {
         try {
-            $alertDispatcher = new AlertDispatcher($exception, $this->dontReport);
+            $dontReport = array_merge($this->dontReport, $this->internalDontReport);
+            $alertDispatcher = new AlertDispatcher($exception, $dontReport);
             $alertDispatcher->notify();
         } catch (Exception $e) {
             // do nothing
