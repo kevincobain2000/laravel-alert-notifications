@@ -2,7 +2,7 @@
     "name": "kevincobain2000/laravel-alert-notifications",
     "description": "Alert notifications of exceptions from your laravel application",
     "license": "MIT",
-    "version": "2.5",
+    "version": "3.0",
     "keywords": ["email", "exception", "laravel", "laravel-5-package", "exception-handling", "debugging"],
     "authors": [
         {
@@ -13,6 +13,7 @@
     "minimum-stability": "stable",
     "require": {
         "php": ">=7.0.0",
+        "guzzlehttp/guzzle": "^6.3",
         "illuminate/support": "~5.0"
     },
     "require-dev": {
