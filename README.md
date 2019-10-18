@@ -16,6 +16,13 @@ Please check config for more details on throttling.
 | Slack           | Supported             |
 | Pager Duty      | Open to pull requests |
 
+### Compatibility
+
+| Alert Notifications| Laravel   |
+| :-------           | :---------|
+| 3.x                | 5.x       |
+| 4.x                | 6.x       |
+
 ### Installation Laravel
 
 ```
