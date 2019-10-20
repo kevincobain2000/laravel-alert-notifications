@@ -9,6 +9,11 @@ php:
 #  - 8.0
 #  - nightly
 
+addons:
+  apt:
+    packages:
+      ant
+
 matrix:
   fast_finish: true
 #  allowed_failures:
