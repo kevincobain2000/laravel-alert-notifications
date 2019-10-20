@@ -11,9 +11,9 @@ php:
 
 matrix:
   fast_finish: true
-  allowed_failures:
-    - php: nightly
-    - php: 8.0
+#  allowed_failures:
+#  - php: nightly
+#    - php: 8.0
 
 before_script:
   - composer self-update
