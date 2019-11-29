@@ -1,7 +1,7 @@
 <?php
+
 namespace Kevincobain2000\LaravelAlertNotifications\Slack;
 
-use Kevincobain2000\LaravelAlertNotifications\Slack\ExceptionOccurredPayload;
 use Kevincobain2000\LaravelAlertNotifications\Dispatcher\Webhook;
 
 class Slack

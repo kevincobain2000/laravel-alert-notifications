@@ -1,29 +1,33 @@
 <?php
+
 namespace Kevincobain2000\LaravelAlertNotifications\Dispatcher;
 
 use Exception;
-use DateTime;
-
 use Illuminate\Support\Facades\Mail;
 use Kevincobain2000\LaravelAlertNotifications\Mail\ExceptionOccurredMail;
-
-use Kevincobain2000\LaravelAlertNotifications\MicrosoftTeams\Teams;
 use Kevincobain2000\LaravelAlertNotifications\MicrosoftTeams\ExceptionOccurredCard;
-
-use Kevincobain2000\LaravelAlertNotifications\Slack\Slack;
+use Kevincobain2000\LaravelAlertNotifications\MicrosoftTeams\Teams;
 use Kevincobain2000\LaravelAlertNotifications\Slack\ExceptionOccurredPayload;
-
-use Kevincobain2000\LaravelAlertNotifications\Dispatcher\ThrottleControl;
+use Kevincobain2000\LaravelAlertNotifications\Slack\Slack;
 
 class AlertDispatcher
 {
     public $exception;
+    public $exceptionContext;
     public $dontAlertExceptions;
+    public $notificationLevel;
 
-    public function __construct(Exception $exception, array $dontAlertExceptions = [])
-    {
-        $this->exception = $exception;
+    public function __construct(
+        Exception $exception,
+        array $dontAlertExceptions = [],
+        array $notificationLevelsMapping = [],
+        array $exceptionContext = []
+    ) {
+        $this->exception           = $exception;
+        $this->exceptionContext    = $exceptionContext;
         $this->dontAlertExceptions = $dontAlertExceptions;
+        $this->notificationLevel   = $notificationLevelsMapping[get_class($exception)]
+            ?? config('laravel_alert_notifications.default_notification_level');
     }
 
     public function notify()
@@ -31,16 +35,19 @@ class AlertDispatcher
         if ($this->shouldAlert()) {
             return $this->dispatch();
         }
+
         return false;
     }
 
     protected function shouldAlert()
     {
-        if (!config('laravel_alert_notifications.throttle_enabled')) {
-            return true;
-        }
-        if ($this->isDonotAlertException()) {
+        $levelsNotToNotify = config('laravel_alert_notifications.exclude_notification_levels') ?? [];
+        if ($this->isDonotAlertException() || in_array($this->notificationLevel, $levelsNotToNotify)) {
             return false;
+        }
+
+        if (! config('laravel_alert_notifications.throttle_enabled')) {
+            return true;
         }
 
         return ! ThrottleControl::isThrottled($this->exception);
@@ -49,16 +56,17 @@ class AlertDispatcher
     protected function dispatch()
     {
         if ($this->shouldMail()) {
-            Mail::send(new ExceptionOccurredMail($this->exception));
+            Mail::send(new ExceptionOccurredMail($this->exception, $this->notificationLevel, $this->exceptionContext));
         }
 
-        if ($this->shouldMicrosoftTeams($this->exception)) {
-            Teams::send(new ExceptionOccurredCard($this->exception));
+        if ($this->shouldMicrosoftTeams()) {
+            Teams::send(new ExceptionOccurredCard($this->exception, $this->exceptionContext));
         }
 
-        if ($this->shouldSlack($this->exception)) {
-            Slack::send(new ExceptionOccurredPayload($this->exception));
+        if ($this->shouldSlack()) {
+            Slack::send(new ExceptionOccurredPayload($this->exception, $this->exceptionContext));
         }
+
         return true;
     }
 
@@ -70,8 +78,7 @@ class AlertDispatcher
     protected function shouldMail(): bool
     {
         return config('laravel_alert_notifications.mail.enabled')
-            && config('laravel_alert_notifications.mail.toAddress')
-            && config('laravel_alert_notifications.mail.fromAddress');
+            && config('laravel_alert_notifications.mail.toAddress');
     }
 
     protected function shouldMicrosoftTeams(): bool

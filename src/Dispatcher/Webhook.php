@@ -1,4 +1,5 @@
 <?php
+
 namespace Kevincobain2000\LaravelAlertNotifications\Dispatcher;
 
 use GuzzleHttp\Client;
@@ -9,11 +10,12 @@ class Webhook
     {
         $client = new Client();
         $result = $client->request($method, $url, [
-            'proxy' => $proxy,
+            'proxy'           => $proxy,
             'connect_timeout' => 5.0,
-            'timeout' => 5.0,
-            'body' => json_encode($body)
+            'timeout'         => 5.0,
+            'body'            => json_encode($body),
         ]);
+
         return $result;
     }
 }

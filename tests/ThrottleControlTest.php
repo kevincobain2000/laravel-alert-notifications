@@ -1,14 +1,11 @@
 <?php
+
 namespace Kevincobain2000\LaravelEmailExceptions\Tests;
 
-use Orchestra\Testbench\TestCase;
-use Exception;
 use BadMethodCallException;
-use Mockery;
-use Mail;
-use Illuminate\Support\Facades\Cache;
-
+use Exception;
 use Kevincobain2000\LaravelAlertNotifications\Dispatcher\ThrottleControl;
+use Orchestra\Testbench\TestCase;
 
 class ThrottleControlTest extends TestCase
 {
@@ -29,19 +26,19 @@ class ThrottleControlTest extends TestCase
     {
         config($this->config);
         $exception = new Exception('message');
-        $actual = ThrottleControl::isThrottled($exception);
+        $actual    = ThrottleControl::isThrottled($exception);
         $this->assertFalse($actual);
 
         $actual = ThrottleControl::isThrottled($exception);
         $this->assertTrue($actual);
 
         $differentException = new BadMethodCallException('message');
-        $actual = ThrottleControl::isThrottled($differentException);
+        $actual             = ThrottleControl::isThrottled($differentException);
         $this->assertFalse($actual);
 
         // crud: do it again
         $exception = new Exception('message');
-        $actual = ThrottleControl::isThrottled($exception);
+        $actual    = ThrottleControl::isThrottled($exception);
         $this->assertTrue($actual);
     }
 
@@ -49,7 +46,7 @@ class ThrottleControlTest extends TestCase
     {
         config($this->config);
         $exception = new Exception('message', $code = 123);
-        $actual = ThrottleControl::getThrottleCacheKey($exception);
+        $actual    = ThrottleControl::getThrottleCacheKey($exception);
         $this->assertSame($actual, 'laravel-alert-notifications-test-Exception-123');
     }
 }
