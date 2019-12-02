@@ -83,7 +83,7 @@ new AlertDispatcher(
     [, array $dontAlertExceptions = []]         // Exceptions that shouldn't trigger notifications
     [, array $notificationLevelsMapping = []]   // [Exception class => Notification level] mapping
     [, array $exceptionContext = []]            // Array of context data
-) : array
+)
 ```
 
 In **app/Exceptions/Handler.php**. It is better to use a try catch to prevent loop. 
