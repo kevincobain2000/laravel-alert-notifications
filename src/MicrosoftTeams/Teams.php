@@ -1,7 +1,7 @@
 <?php
+
 namespace Kevincobain2000\LaravelAlertNotifications\MicrosoftTeams;
 
-use Kevincobain2000\LaravelAlertNotifications\MicrosoftTeams\ExceptionOccurredCard;
 use Kevincobain2000\LaravelAlertNotifications\Dispatcher\Webhook;
 
 class Teams
