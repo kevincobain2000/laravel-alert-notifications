@@ -3,11 +3,11 @@
 namespace Kevincobain2000\LaravelAlertNotifications;
 
 use Illuminate\Support\ServiceProvider;
-use Laravel\Lumen\Application as Lumen;
 
 class AlertNotificationsServiceProvider extends ServiceProvider
 {
     const CONFIG_PATH = __DIR__.'/config/laravel_alert_notifications.php';
+
     /**
      * Indicates if loading of the provider is deferred.
      *
@@ -29,7 +29,7 @@ class AlertNotificationsServiceProvider extends ServiceProvider
             __DIR__.'/views' => resource_path('views/vendor/laravel_alert_notifications'),
         ], 'views');
 
-        if (app() instanceof Lumen) {
+        if (app() instanceof \Laravel\Lumen\Application) {
             app()->configure('laravel_alert_notifications');
         }
     }
