@@ -77,8 +77,16 @@ ALERT_NOTIFICATION_CURL_PROXY=
 ```
 
 ### Usage
+```php
+new AlertDispatcher( 
+    Exception $e 
+    [, array $dontAlertExceptions = []]         // Exceptions that shouldn't trigger notifications
+    [, array $notificationLevelsMapping = []]   // [Exception class => Notification level] mapping
+    [, array $exceptionContext = []]            // Array of context data
+) : array
+```
 
-In **app/Exceptions/Handler.php**. It is better to use a try catch to prevent loop. Method takes a mapping array as a third optional parameter to define an exception level or uses the default level from config.
+In **app/Exceptions/Handler.php**. It is better to use a try catch to prevent loop. 
 
 ```
 use Kevincobain2000\LaravelAlertNotifications\Dispatcher\AlertDispatcher;
@@ -150,7 +158,7 @@ class Handler extends ExceptionHandler
 
 #### Teams
 
-<img src="https://i.imgur.com//PNzrWmA.png" alt="Teams">
+<img src="https://i.imgur.com/zl20RhQ.png" alt="Teams">
 
 #### Slack
 
