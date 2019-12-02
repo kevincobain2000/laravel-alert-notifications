@@ -50,7 +50,7 @@ Since Lumen doesn't support auto-discovery, move config and view files to the de
 
 ```shell
 cp vendor/kevincobain2000/laravel-alert-notifications/src/config/laravel_alert_notifications.php config/laravel_alert_notifications.php
-mkdir -p "resources/views/vendor/laravel-alert-notifications/" && cp vendor/kevincobain2000/laravel-alert-notifications/src/views/* resources/views/vendor/laravel-alert-notifications/
+mkdir -p "resources/views/vendor/laravel_alert_notifications/" && cp vendor/kevincobain2000/laravel-alert-notifications/src/views/* resources/views/vendor/laravel_alert_notifications/
 ```
 
 and add the following to bootstrap/app.php:
