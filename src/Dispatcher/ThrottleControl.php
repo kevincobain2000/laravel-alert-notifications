@@ -1,9 +1,9 @@
 <?php
+
 namespace Kevincobain2000\LaravelAlertNotifications\Dispatcher;
 
-use Exception;
 use DateTime;
-
+use Exception;
 use Illuminate\Support\Facades\Cache;
 
 class ThrottleControl
@@ -12,7 +12,7 @@ class ThrottleControl
     public static function isThrottled(Exception $exception): bool
     {
         $driver = config('laravel_alert_notifications.cache_driver');
-        $key = self::getThrottleCacheKey($exception);
+        $key    = self::getThrottleCacheKey($exception);
 
         if (Cache::store($driver)->has($key)) {
             return true;
@@ -26,17 +26,19 @@ class ThrottleControl
     public static function getThrottleCacheKey(Exception $exception)
     {
         $key = config('laravel_alert_notifications.cache_prefix')
-            . get_class($exception)
-            . '-'
-            . $exception->getCode();
+            .get_class($exception)
+            .'-'
+            .$exception->getCode();
+
         return $key;
     }
 
     private static function nowAddMinutes(): DateTime
     {
-        $dateTime = new DateTime();
+        $dateTime     = new DateTime();
         $minutesToAdd = config('laravel_alert_notifications.throttle_duration_minutes');
         $dateTime->modify("+{$minutesToAdd} minutes");
+
         return $dateTime;
     }
 }

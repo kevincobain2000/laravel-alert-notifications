@@ -1,13 +1,12 @@
 <?php
+
 namespace Kevincobain2000\LaravelEmailExceptions\Tests;
 
-use Orchestra\Testbench\TestCase;
 use Exception;
-use Mockery;
-use Mail;
-use Illuminate\Support\Facades\Cache;
-
 use Kevincobain2000\LaravelAlertNotifications\Dispatcher\AlertDispatcher;
+use Mail;
+use Mockery;
+use Orchestra\Testbench\TestCase;
 
 class AlertDispatcherTest extends TestCase
 {
@@ -19,6 +18,7 @@ class AlertDispatcherTest extends TestCase
         'laravel_alert_notifications.mail.enabled'              => true,
         'laravel_alert_notifications.mail.toAddress'            => 'test@test.com',
         'laravel_alert_notifications.mail.fromAddress'          => 'test@test.com',
+        'laravel_alert_notifications.mail.subject'              => 'test',
         'laravel_alert_notifications.microsoft_teams.enabled'   => true,
         'laravel_alert_notifications.microsoft_teams.webhook'   => 'http://test',
         'laravel_alert_notifications.slack.enabled'             => true,
@@ -31,28 +31,19 @@ class AlertDispatcherTest extends TestCase
         parent::setUp();
 
         $this->alertHandlerMock = Mockery::mock(
-            'Kevincobain2000\LaravelAlertNotifications\Dispatcher\AlertDispatcher'
+            AlertDispatcher::class
         )->makePartial()->shouldAllowMockingProtectedMethods();
     }
 
     public function testAlert()
     {
-        $exception = new Exception('Test Exception');
-        $this->alertHandlerMock->exception = $exception;
+        $exception                                   = new Exception('Test Exception');
+        $this->alertHandlerMock->exception           = $exception;
         $this->alertHandlerMock->dontAlertExceptions = [];
-
 
         config($this->config);
 
         Mail::fake();
-
-        // $this->alertHandlerMock
-        //     ->shouldReceive('shouldAlert')
-        //     ->once()
-        //     ->andReturn(true);
-
-        // $actual = $this->alertHandlerMock->notify();
-        // $this->assertTrue($actual);
 
         $actual = $this->alertHandlerMock->shouldMail();
         $this->assertTrue($actual);
@@ -64,23 +55,15 @@ class AlertDispatcherTest extends TestCase
         $this->assertTrue($actual);
 
         $this->alertHandlerMock->dontAlertExceptions = [Exception::class];
-        $actual = $this->alertHandlerMock->isDonotAlertException();
+        $actual                                      = $this->alertHandlerMock->isDonotAlertException();
         $this->assertTrue($actual);
-
-        // $this->alertHandlerMock
-        //     ->shouldReceive('shouldAlert')
-        //     ->once()
-        //     ->andReturn(false);
-        // $actual = $this->alertHandlerMock->notify();
-        // $this->assertFalse($actual);
     }
 
     public function testShouldAlert()
     {
-        $exception = new Exception('Test Exception');
-        $this->alertHandlerMock->exception = $exception;
+        $exception                                   = new Exception('Test Exception');
+        $this->alertHandlerMock->exception           = $exception;
         $this->alertHandlerMock->dontAlertExceptions = [];
-
 
         config($this->config);
 
@@ -92,7 +75,7 @@ class AlertDispatcherTest extends TestCase
 
     public function testBasic()
     {
-        $alert = new AlertDispatcher(new Exception, []);
+        $alert = new AlertDispatcher(new Exception(), []);
         $this->assertTrue(true);
     }
 }
