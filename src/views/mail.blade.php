@@ -51,7 +51,7 @@
                                     <strong>Exception Message:</strong>
                                 </td>
                                 <td>
-                                    {{ $exception->getMessage() }}
+                                    {!! htmlspecialchars($exception->getMessage(), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') !!}
                                 </td>
                             </tr>
                             <tr>
@@ -88,7 +88,7 @@
                             </tr>
                             <tr>
                                 <td align="left" style="text-align: left;">
-                                    <pre style="white-space: pre-wrap;">{{$exception->getTraceAsString()}}</pre>
+                                    <pre style="white-space: pre-wrap;">{!! htmlspecialchars($flattenException->getAsString(), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') !!}</pre>
                                 </td>
                             </tr>
                         </table>
