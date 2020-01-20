@@ -6,6 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Symfony\Component\ErrorHandler\Exception\FlattenException;
 
 class ExceptionOccurredMail extends Mailable
 {
@@ -37,6 +38,7 @@ class ExceptionOccurredMail extends Mailable
         $data = [
             'exception' => $this->exception,
             'context'   => $this->exceptionContext,
+            'flattenException' => FlattenException::create($this->exception)
         ];
 
         return $this->subject($subject)->from($from)->to($to)->with($data);
