@@ -36,7 +36,7 @@ class ExceptionOccurredMail extends Mailable
 
         $data = [
             'exception' => $this->exception,
-            'context'   => $this->exceptionContext,
+            'context'   => $this->exceptionContext
         ];
 
         return $this->subject($subject)->from($from)->to($to)->with($data);
