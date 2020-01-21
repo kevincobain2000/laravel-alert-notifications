@@ -88,7 +88,7 @@
                             </tr>
                             <tr>
                                 <td align="left" style="text-align: left;">
-                                    <pre style="white-space: pre-wrap;">{!! htmlspecialchars($flattenException->getAsString(), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') !!}</pre>
+                                    <pre style="white-space: pre-wrap;">{!! htmlspecialchars($exception->getTraceAsString(), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') !!}</pre>
                                 </td>
                             </tr>
                         </table>
