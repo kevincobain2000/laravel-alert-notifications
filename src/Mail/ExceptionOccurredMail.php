@@ -14,7 +14,8 @@ class ExceptionOccurredMail extends Mailable
     public $exception;
     public $exceptionContext;
 
-    public $view = 'vendor.laravel_alert_notifications.mail';
+    public $view = 'laravel_alert_notifications::mail';
+    // public $view = 'vendor.laravel_alert_notifications.mail';
 
     protected $notificationLevel;
 
