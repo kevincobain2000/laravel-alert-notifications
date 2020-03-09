@@ -9,6 +9,7 @@ use Kevincobain2000\LaravelAlertNotifications\MicrosoftTeams\ExceptionOccurredCa
 use Kevincobain2000\LaravelAlertNotifications\MicrosoftTeams\Teams;
 use Kevincobain2000\LaravelAlertNotifications\Slack\ExceptionOccurredPayload;
 use Kevincobain2000\LaravelAlertNotifications\Slack\Slack;
+use Throwable;
 
 class AlertDispatcher
 {
@@ -17,8 +18,15 @@ class AlertDispatcher
     public $dontAlertExceptions;
     public $notificationLevel;
 
+    /**
+     * AlertDispatcher constructor.
+     * @param Exception|Throwable $exception
+     * @param array $dontAlertExceptions
+     * @param array $notificationLevelsMapping
+     * @param array $exceptionContext
+     */
     public function __construct(
-        Exception $exception,
+        $exception,
         array $dontAlertExceptions = [],
         array $notificationLevelsMapping = [],
         array $exceptionContext = []
