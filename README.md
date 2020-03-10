@@ -103,13 +103,13 @@ class Handler extends ExceptionHandler
         //
     ];
 
-    public function report(Exception $exception)
+    public function report(Throwable $exception)
     {
         try {
             $dontReport = array_merge($this->dontReport, $this->internalDontReport);
             $alertDispatcher = new AlertDispatcher($exception, $dontReport, $this->exceptionLogLevels);
             $alertDispatcher->notify();
-        } catch (Exception $e) {
+        } catch (Throwable $e) {
             // log any unexpected exceptions or do nothing
         }
         parent::report($exception);
