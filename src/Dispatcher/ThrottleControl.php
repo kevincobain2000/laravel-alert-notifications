@@ -3,13 +3,13 @@
 namespace Kevincobain2000\LaravelAlertNotifications\Dispatcher;
 
 use DateTime;
-use Exception;
+use Throwable;
 use Illuminate\Support\Facades\Cache;
 
 class ThrottleControl
 {
     // Check if alert is already sent
-    public static function isThrottled(Exception $exception): bool
+    public static function isThrottled(Throwable $exception): bool
     {
         $driver = config('laravel_alert_notifications.cache_driver');
         $key    = self::getThrottleCacheKey($exception);
@@ -23,7 +23,7 @@ class ThrottleControl
         return false;
     }
 
-    public static function getThrottleCacheKey(Exception $exception)
+    public static function getThrottleCacheKey(Throwable $exception)
     {
         $key = config('laravel_alert_notifications.cache_prefix')
             .get_class($exception)
