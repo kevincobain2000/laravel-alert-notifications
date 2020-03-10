@@ -2,13 +2,13 @@
 
 namespace Kevincobain2000\LaravelAlertNotifications\Dispatcher;
 
-use Exception;
 use Illuminate\Support\Facades\Mail;
 use Kevincobain2000\LaravelAlertNotifications\Mail\ExceptionOccurredMail;
 use Kevincobain2000\LaravelAlertNotifications\MicrosoftTeams\ExceptionOccurredCard;
 use Kevincobain2000\LaravelAlertNotifications\MicrosoftTeams\Teams;
 use Kevincobain2000\LaravelAlertNotifications\Slack\ExceptionOccurredPayload;
 use Kevincobain2000\LaravelAlertNotifications\Slack\Slack;
+use Throwable;
 
 class AlertDispatcher
 {
@@ -18,7 +18,7 @@ class AlertDispatcher
     public $notificationLevel;
 
     public function __construct(
-        Exception $exception,
+        Throwable $exception,
         array $dontAlertExceptions = [],
         array $notificationLevelsMapping = [],
         array $exceptionContext = []
