@@ -1,4 +1,7 @@
 ## Laravel Alert Notifications
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 <a href="https://travis-ci.org/kevincobain2000/laravel-alert-notifications"><img src="https://travis-ci.org/kevincobain2000/laravel-alert-notifications.svg?branch=master" alt="Travis Build Status"></a>
 <a href="https://scrutinizer-ci.com/g/kevincobain2000/laravel-alert-notifications"><img src="https://scrutinizer-ci.com/g/kevincobain2000/laravel-alert-notifications/badges/quality-score.png?b=master" alt="Quality Score"></a>
@@ -168,3 +171,22 @@ class Handler extends ExceptionHandler
 
 1. https://qiita.com/kidatti/items/8732114ec4d1727844b8
 2. https://laravel-news.com/email-on-error-exceptions
+
+## Contributors ✨
+
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tr>
+    <td align="center"><a href="https://github.com/kitloong"><img src="https://avatars2.githubusercontent.com/u/7660346?v=4" width="100px;" alt=""/><br /><sub><b>Kit Loong</b></sub></a><br /><a href="https://github.com/kevincobain2000/laravel-alert-notifications/pulls?q=is%3Apr+reviewed-by%3Akitloong" title="Reviewed Pull Requests">👀</a> <a href="https://github.com/kevincobain2000/laravel-alert-notifications/commits?author=kitloong" title="Tests">⚠️</a> <a href="https://github.com/kevincobain2000/laravel-alert-notifications/commits?author=kitloong" title="Code">💻</a></td>
+  </tr>
+</table>
+
+<!-- markdownlint-enable -->
+<!-- prettier-ignore-end -->
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
