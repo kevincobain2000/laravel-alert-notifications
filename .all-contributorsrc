@@ -36,6 +36,17 @@
         "test",
         "code"
       ]
+    },
+    {
+      "login": "ikari7789",
+      "name": "Andrew Miller",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/1041215?v=4",
+      "profile": "http://www.standingmist.com",
+      "contributions": [
+        "review",
+        "test",
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
