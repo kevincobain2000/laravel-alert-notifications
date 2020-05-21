@@ -1,0 +1,26 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "ikari7789",
+      "name": "Andrew Miller",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/1041215?v=4",
+      "profile": "http://www.standingmist.com",
+      "contributions": [
+        "review",
+        "test",
+        "code"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "laravel-alert-notifications",
+  "projectOwner": "kevincobain2000",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true
+}
