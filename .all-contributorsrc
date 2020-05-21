@@ -47,6 +47,17 @@
         "test",
         "code"
       ]
+    },
+    {
+      "login": "kevincobain2000",
+      "name": "Pulkit Kathuria",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/629055?v=4",
+      "profile": "https://kevincobain2000.github.io",
+      "contributions": [
+        "review",
+        "test",
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
