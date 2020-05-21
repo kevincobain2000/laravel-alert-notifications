@@ -25,6 +25,17 @@
         "test",
         "code"
       ]
+    },
+    {
+      "login": "kitloong",
+      "name": "Kit Loong",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/7660346?v=4",
+      "profile": "https://github.com/kitloong",
+      "contributions": [
+        "review",
+        "test",
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
