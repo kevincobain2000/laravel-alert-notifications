@@ -13,7 +13,7 @@
     "minimum-stability": "stable",
     "require": {
         "php": ">=7.0.0",
-        "guzzlehttp/guzzle": "^6.3",
+        "guzzlehttp/guzzle": ">=6.3",
         "illuminate/support": "~5.0|~6.0|~7.0"
     },
     "require-dev": {
