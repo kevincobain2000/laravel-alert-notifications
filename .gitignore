@@ -15,3 +15,5 @@ npm-debug.log
 .phpintel
 build/
 cache.properties
+.phpunit.result.cache
+.php_cs.cache

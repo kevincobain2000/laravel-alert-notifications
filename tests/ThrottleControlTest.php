@@ -17,7 +17,7 @@ class ThrottleControlTest extends TestCase
         'laravel_alert_notifications.cache_prefix'              => 'laravel-alert-notifications-test-',
     ];
 
-    public function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
     }
