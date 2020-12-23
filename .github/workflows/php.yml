@@ -45,7 +45,7 @@ jobs:
         run: "composer install --no-interaction --no-progress --no-suggest"
 
       - name: "Run squizlabs/php_codesniffer"
-        run: "vendor/bin/phpcs --standard=PSR2 src"
+        run: "vendor/bin/phpcs --standard=PSR2 src -n"
 
   tests:
     name: "Tests"
@@ -68,7 +68,7 @@ jobs:
         with:
           coverage: "none"
           extensions: "intl"
-          ini-values: "memory_limit=-1,short_open_tag=1"
+          ini-values: "memory_limit=-1"
           php-version: "${{ matrix.php-version }}"
 
       - name: "Determine composer cache directory"
@@ -107,7 +107,7 @@ jobs:
         with:
           coverage: "xdebug"
           extensions: "intl"
-          ini-values: "memory_limit=-1,short_open_tag=1"
+          ini-values: "memory_limit=-1"
           php-version: "${{ matrix.php-version }}"
 
       - name: "Determine composer cache directory"
