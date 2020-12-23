@@ -1,6 +1,6 @@
 ## Laravel Alert Notifications
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-6-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 <a href="https://travis-ci.org/kevincobain2000/laravel-alert-notifications"><img src="https://travis-ci.org/kevincobain2000/laravel-alert-notifications.svg?branch=master" alt="Travis Build Status"></a>
@@ -186,6 +186,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/kitloong"><img src="https://avatars2.githubusercontent.com/u/7660346?v=4" width="100px;" alt=""/><br /><sub><b>Kit Loong</b></sub></a><br /><a href="https://github.com/kevincobain2000/laravel-alert-notifications/pulls?q=is%3Apr+reviewed-by%3Akitloong" title="Reviewed Pull Requests">👀</a> <a href="https://github.com/kevincobain2000/laravel-alert-notifications/commits?author=kitloong" title="Tests">⚠️</a> <a href="https://github.com/kevincobain2000/laravel-alert-notifications/commits?author=kitloong" title="Code">💻</a></td>
     <td align="center"><a href="http://www.standingmist.com"><img src="https://avatars1.githubusercontent.com/u/1041215?v=4" width="100px;" alt=""/><br /><sub><b>Andrew Miller</b></sub></a><br /><a href="https://github.com/kevincobain2000/laravel-alert-notifications/pulls?q=is%3Apr+reviewed-by%3Aikari7789" title="Reviewed Pull Requests">👀</a> <a href="https://github.com/kevincobain2000/laravel-alert-notifications/commits?author=ikari7789" title="Tests">⚠️</a> <a href="https://github.com/kevincobain2000/laravel-alert-notifications/commits?author=ikari7789" title="Code">💻</a></td>
     <td align="center"><a href="https://kevincobain2000.github.io"><img src="https://avatars2.githubusercontent.com/u/629055?v=4" width="100px;" alt=""/><br /><sub><b>Pulkit Kathuria</b></sub></a><br /><a href="https://github.com/kevincobain2000/laravel-alert-notifications/pulls?q=is%3Apr+reviewed-by%3Akevincobain2000" title="Reviewed Pull Requests">👀</a> <a href="https://github.com/kevincobain2000/laravel-alert-notifications/commits?author=kevincobain2000" title="Tests">⚠️</a> <a href="https://github.com/kevincobain2000/laravel-alert-notifications/commits?author=kevincobain2000" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/masashi1014"><img src="https://avatars0.githubusercontent.com/u/49443783?v=4" width="100px;" alt=""/><br /><sub><b>Masashi</b></sub></a><br /><a href="https://github.com/kevincobain2000/laravel-alert-notifications/commits?author=masashi1014" title="Tests">⚠️</a></td>
   </tr>
 </table>
 

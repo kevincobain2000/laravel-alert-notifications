@@ -58,6 +58,15 @@
         "test",
         "code"
       ]
+    },
+    {
+      "login": "masashi1014",
+      "name": "Masashi",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/49443783?v=4",
+      "profile": "https://github.com/masashi1014",
+      "contributions": [
+        "test"
+      ]
     }
   ],
   "contributorsPerLine": 7,
