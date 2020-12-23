@@ -24,7 +24,7 @@ class NotificationLevelTest extends TestCase
         'laravel_alert_notifications.exclude_notification_levels' => ['debug'],
     ];
 
-    public function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
