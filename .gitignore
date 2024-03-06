@@ -5,6 +5,7 @@
 .phpintel
 .phpunit.result.cache
 /.idea
+/.phpunit.cache
 /.vagrant
 /_ide_helper.php
 /node_modules
