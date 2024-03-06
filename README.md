@@ -80,6 +80,7 @@ ALERT_NOTIFICATION_CURL_PROXY=
 ```
 
 ### Usage
+
 ```php
 new AlertDispatcher( 
     Exception $e 
@@ -91,7 +92,7 @@ new AlertDispatcher(
 
 In **app/Exceptions/Handler.php**. It is better to use a try catch to prevent loop. 
 
-```
+```php
 use Kevincobain2000\LaravelAlertNotifications\Dispatcher\AlertDispatcher;
 
 class Handler extends ExceptionHandler
