@@ -1,6 +1,6 @@
 name: Code Coverage
 
-on: [fork, pull_request, push]
+on: [fork, pull_request, push, workflow_dispatch]
 
 jobs:
   code-coverage:

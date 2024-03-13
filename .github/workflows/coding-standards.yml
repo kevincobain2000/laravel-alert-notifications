@@ -1,6 +1,6 @@
 name: Coding Standards
 
-on: [fork, pull_request, push]
+on: [fork, pull_request, push, workflow_dispatch]
 
 jobs:
   coding-standards:
