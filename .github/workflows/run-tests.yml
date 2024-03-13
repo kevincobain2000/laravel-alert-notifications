@@ -59,8 +59,8 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ${{ steps.determine-composer-cache-directory.outputs.directory }}
-          key: php-${{ matrix.php-version }}-laravel-${{ matrix.laravel }}-composer-${{ hashFiles('**/composer.json') }}
-          restore-keys: php-${{ matrix.php-version }}-composer-
+          key: php-${{ matrix.php-version }}-laravel-${{ matrix.laravel-version }}-${{ matrix.dependency-version }}-composer-${{ hashFiles('**/composer.json') }}
+          restore-keys: php-${{ matrix.php-version }}-laravel-${{ matrix.laravel-version }}-${{ matrix.dependency-version }}-composer-
 
       - name: Install dependencies with composer
         run: |
