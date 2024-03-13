@@ -34,6 +34,10 @@ jobs:
             laravel-version: '^7.0'
           - php-version: '8.1'
             laravel-version: '^11.0'
+          - php-version: '8.2'
+            laravel-version: '^7.0'
+          - php-version: '8.2'
+            laravel-version: '^8.0'
 
     steps:
       - name: Checkout
