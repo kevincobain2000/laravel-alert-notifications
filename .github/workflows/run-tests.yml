@@ -4,13 +4,34 @@ on: [fork, pull_request, push, workflow_dispatch]
 
 jobs:
   tests:
-    name: Tests
+    name: PHP ${{ matrix.php-version }} - Laravel ${{ matrix.laravel-version }} - ${{ matrix.dependency-version }}
 
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
         php-version: ['7.3', '7.4', '8.0', '8.1', '8.2', '8.3']
+        laravel-version: ['^7.0', '^8.0', '^9.0', '^10.0', '^11.0']
+        dependency-version: [prefer-lowest, prefer-stable]
+        exclude:
+          - php-version: '7.3'
+            laravel-version: '^9.0'
+          - php-version: '7.3'
+            laravel-version: '^10.0'
+          - php-version: '7.3'
+            laravel-version: '^11.0'
+          - php-version: '7.4'
+            laravel-version: '^9.0'
+          - php-version: '7.4'
+            laravel-version: '^10.0'
+          - php-version: '7.4'
+            laravel-version: '^11.0'
+          - php-version: '8.0'
+            laravel-version: '^10.0'
+          - php-version: '8.0'
+            laravel-version: '^11.0'
+          - php-version: '8.1'
+            laravel-version: '^7.0'
 
     steps:
       - name: Checkout
@@ -32,11 +53,18 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ${{ steps.determine-composer-cache-directory.outputs.directory }}
-          key: php-${{ matrix.php-version }}-composer-${{ hashFiles('**/composer.json') }}
+          key: php-${{ matrix.php-version }}-laravel-${{ matrix.laravel }}-composer-${{ hashFiles('**/composer.json') }}
           restore-keys: php-${{ matrix.php-version }}-composer-
 
       - name: Install dependencies with composer
-        run: composer install --no-interaction --no-progress --no-suggest
+        run: |
+          composer require --no-interaction --no-update "illuminate/support:${{ matrix.laravel-version }}"
+          composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction
+
+      - name: Setup Problem Matchers
+        run: |
+          echo "::add-matcher::${{ runner.tool_cache }}/php.json"
+          echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
 
       - name: Run tests with phpunit/phpunit
         run: vendor/bin/phpunit
