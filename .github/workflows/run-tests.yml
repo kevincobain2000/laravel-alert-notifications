@@ -55,6 +55,9 @@ jobs:
         id: determine-composer-cache-directory
         run: echo "directory=$(composer config cache-dir)" >> $GITHUB_OUTPUT
 
+      - name: Update composer.json for the build
+        run: composer require --no-interaction --no-update "illuminate/support:${{ matrix.laravel-version }}"
+
       - name: Cache dependencies installed with composer
         uses: actions/cache@v4
         with:
@@ -63,9 +66,7 @@ jobs:
           restore-keys: php-${{ matrix.php-version }}-laravel-${{ matrix.laravel-version }}-${{ matrix.dependency-version }}-composer-
 
       - name: Install dependencies with composer
-        run: |
-          composer require --no-interaction --no-update "illuminate/support:${{ matrix.laravel-version }}"
-          composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction
+        run: composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction
 
       - name: Setup Problem Matchers
         run: |
