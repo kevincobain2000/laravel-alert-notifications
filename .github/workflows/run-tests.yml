@@ -8,10 +8,10 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    # Enable all tests to run to ease finding multiple issues at once
-    fail-fast: false
-
     strategy:
+      # Enable all tests to run to ease finding multiple issues at once
+      fail-fast: false
+
       matrix:
         php-version: ['7.3', '7.4', '8.0', '8.1', '8.2', '8.3']
         laravel-version: ['^7.0', '^8.79', '^9.33', '^10.0', '^11.0']
