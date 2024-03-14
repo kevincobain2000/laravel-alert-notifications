@@ -1,12 +1,26 @@
-## Laravel Alert Notifications
+
+<h1 align="center">
+  Laravel Alert Notifcations
+</h1>
+<p align="center">
+    Send php exceptions to email, microsoft teams, slack.
+    Notifications are throttle enabled so devs don't get a lot of emails from one host (or all hosts if  cache driver is shared)
+    Please check config for more details on throttling.
+</p>
+
+
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 [![All Contributors](https://img.shields.io/badge/all_contributors-6-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
+![composer-install-time](https://coveritup.app/badge?org=kevincobain2000&repo=laravel-alert-notifications&type=composer-install-time&branch=master)
+![coverage](https://coveritup.app/badge?org=kevincobain2000&repo=laravel-alert-notifications&type=coverage&branch=master)
+![composer-dependencies](https://coveritup.app/badge?org=kevincobain2000&repo=laravel-alert-notifications&type=composer-dependencies&branch=master)
 
-Send php exceptions to email, microsoft teams, slack.
-Notifications are throttle enabled so devs don't get a lot of emails from one host (or all hosts if  cache driver is shared)
-Please check config for more details on throttling.
+![composer-install-time](https://coveritup.app/chart?org=kevincobain2000&repo=laravel-alert-notifications&type=composer-install-time&output=svg&width=160&height=160&branch=master)
+![coverage](https://coveritup.app/chart?org=kevincobain2000&repo=laravel-alert-notifications&type=coverage&output=svg&width=160&height=160&branch=master)
+![composer-dependencies](https://coveritup.app/chart?org=kevincobain2000&repo=laravel-alert-notifications&type=composer-dependencies&output=svg&width=160&height=160&branch=master)
+
 
 | Channels        | Progress              |
 | :-------        | :---------            |
