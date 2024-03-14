@@ -4,8 +4,10 @@
 </h1>
 <p align="center">
     Send php exceptions to email, microsoft teams, slack.
-    Notifications are throttle enabled so devs don't get a lot of emails from one host (or all hosts if  cache driver is shared)
-    Please check config for more details on throttling.
+    <br/>
+    Notifications are throttle enabled so devs don't get a lot of emails from one host
+    <br/>
+    (or all hosts if cache driver is shared).
 </p>
 
 
