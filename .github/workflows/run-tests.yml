@@ -1,0 +1,84 @@
+name: Run Tests
+
+on: [fork, pull_request, push, workflow_dispatch]
+
+jobs:
+  tests:
+    name: PHP ${{ matrix.php-version }} - Laravel ${{ matrix.laravel-version }} - ${{ matrix.dependency-version }}
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      # Enable all tests to run to ease finding multiple issues at once
+      fail-fast: false
+
+      matrix:
+        php-version: ['7.3', '7.4', '8.0', '8.1', '8.2', '8.3']
+        laravel-version: ['^7.0', '^8.79', '^9.33', '^10.0', '^11.0']
+        dependency-version: [prefer-lowest, prefer-stable]
+        exclude:
+          - php-version: '7.3'
+            laravel-version: '^9.33'
+          - php-version: '7.3'
+            laravel-version: '^10.0'
+          - php-version: '7.3'
+            laravel-version: '^11.0'
+          - php-version: '7.4'
+            laravel-version: '^9.33'
+          - php-version: '7.4'
+            laravel-version: '^10.0'
+          - php-version: '7.4'
+            laravel-version: '^11.0'
+          - php-version: '8.0'
+            laravel-version: '^10.0'
+          - php-version: '8.0'
+            laravel-version: '^11.0'
+          - php-version: '8.1'
+            laravel-version: '^7.0'
+          - php-version: '8.1'
+            laravel-version: '^11.0'
+          - php-version: '8.2'
+            laravel-version: '^7.0'
+          - php-version: '8.2'
+            laravel-version: '^8.79'
+          - php-version: '8.3'
+            laravel-version: '^7.0'
+          - php-version: '8.3'
+            laravel-version: '^8.79'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install PHP with extensions
+        uses: shivammathur/setup-php@v2
+        with:
+          coverage: none
+          extensions: intl
+          ini-values: memory_limit=-1
+          php-version: ${{ matrix.php-version }}
+
+      - name: Determine composer cache directory
+        id: determine-composer-cache-directory
+        run: echo "directory=$(composer config cache-dir)" >> $GITHUB_OUTPUT
+
+      - name: Update composer.json for the build
+        run: composer require --no-interaction --no-update "illuminate/support:${{ matrix.laravel-version }}"
+
+      - name: Cache dependencies installed with composer
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.determine-composer-cache-directory.outputs.directory }}
+          key: php-${{ matrix.php-version }}-laravel-${{ matrix.laravel-version }}-${{ matrix.dependency-version }}-composer-${{ hashFiles('**/composer.json') }}
+          restore-keys: php-${{ matrix.php-version }}-laravel-${{ matrix.laravel-version }}-${{ matrix.dependency-version }}-composer-
+
+      - name: Install dependencies with composer
+        run: composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction
+
+      - name: Setup Problem Matchers
+        run: |
+          echo "::add-matcher::${{ runner.tool_cache }}/php.json"
+          echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
+
+      - name: Run tests with phpunit/phpunit
+        run: vendor/bin/phpunit
