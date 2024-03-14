@@ -1,16 +1,28 @@
-## Laravel Alert Notifications
+
+<h1 align="center">
+  Laravel Alert Notifcations
+</h1>
+<p align="center">
+    Send php exceptions to email, microsoft teams, slack.
+    <br/>
+    Notifications are throttle enabled so devs don't get a lot of emails from one host
+    <br/>
+    (or all hosts if cache driver is shared).
+</p>
+
+
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 [![All Contributors](https://img.shields.io/badge/all_contributors-6-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
-<a href="https://travis-ci.org/kevincobain2000/laravel-alert-notifications"><img src="https://travis-ci.org/kevincobain2000/laravel-alert-notifications.svg?branch=master" alt="Travis Build Status"></a>
-<a href="https://scrutinizer-ci.com/g/kevincobain2000/laravel-alert-notifications"><img src="https://scrutinizer-ci.com/g/kevincobain2000/laravel-alert-notifications/badges/quality-score.png?b=master" alt="Quality Score"></a>
-<a href="https://scrutinizer-ci.com/g/kevincobain2000/laravel-alert-notifications"><img src="https://scrutinizer-ci.com/g/kevincobain2000/laravel-alert-notifications/badges/build.png?b=master" alt="Build Status"></a>
-<a href="https://scrutinizer-ci.com/g/kevincobain2000/laravel-alert-notifications"><img src="https://scrutinizer-ci.com/g/kevincobain2000/laravel-alert-notifications/badges/coverage.png?b=master" alt="Coverage Status"></a>
+![composer-install-time](https://coveritup.app/badge?org=kevincobain2000&repo=laravel-alert-notifications&type=composer-install-time&branch=master)
+![coverage](https://coveritup.app/badge?org=kevincobain2000&repo=laravel-alert-notifications&type=coverage&branch=master)
+![composer-dependencies](https://coveritup.app/badge?org=kevincobain2000&repo=laravel-alert-notifications&type=composer-dependencies&branch=master)
 
-Send php exceptions to email, microsoft teams, slack.
-Notifications are throttle enabled so devs don't get a lot of emails from one host (or all hosts if  cache driver is shared)
-Please check config for more details on throttling.
+![composer-install-time](https://coveritup.app/chart?org=kevincobain2000&repo=laravel-alert-notifications&type=composer-install-time&output=svg&width=160&height=160&branch=master)
+![coverage](https://coveritup.app/chart?org=kevincobain2000&repo=laravel-alert-notifications&type=coverage&output=svg&width=160&height=160&branch=master)
+![composer-dependencies](https://coveritup.app/chart?org=kevincobain2000&repo=laravel-alert-notifications&type=composer-dependencies&output=svg&width=160&height=160&branch=master)
+
 
 | Channels        | Progress              |
 | :-------        | :---------            |
@@ -82,15 +94,15 @@ ALERT_NOTIFICATION_CURL_PROXY=
 ### Usage
 
 ```php
-new AlertDispatcher( 
-    Exception $e 
+new AlertDispatcher(
+    Exception $e
     [, array $dontAlertExceptions = []]         // Exceptions that shouldn't trigger notifications
     [, array $notificationLevelsMapping = []]   // [Exception class => Notification level] mapping
     [, array $exceptionContext = []]            // Array of context data
 )
 ```
 
-In **app/Exceptions/Handler.php**. It is better to use a try catch to prevent loop. 
+In **app/Exceptions/Handler.php**. It is better to use a try catch to prevent loop.
 
 ```php
 use Kevincobain2000\LaravelAlertNotifications\Dispatcher\AlertDispatcher;
@@ -145,7 +157,7 @@ class Handler extends ExceptionHandler
 |                               | ``%ExceptionLevel%``   => ``current notification level``                      |
 |                               | ex. ``'subject' => 'Exception [%ExceptionType%] has ocurred``'                |                                 |
 | mail.#level#                  | Configs for each notification level                                           |
-|                               | notification levels refer to those defined in ``\Psr\Log\LogLevel``           | 
+|                               | notification levels refer to those defined in ``\Psr\Log\LogLevel``           |
 | mail.#level#.toAddress        | (default mail.to_address), #level# notification recipient e-mail              |
 | mail.#level#.subject          | #level# notification e-mail subject                                           |
 | microsoft_teams.enabled       | (default true), false will not notify to teams                                |
