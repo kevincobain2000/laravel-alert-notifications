@@ -1,10 +1,10 @@
-name: Code Coverage
+name: Coveritup
 
-on: [fork, pull_request, push, workflow_dispatch]
+on: [fork, pull_request, push]
 
 jobs:
-  code-coverage:
-    name: Code Coverage
+  Coveritup:
+    name: Coveritup
 
     runs-on: ubuntu-latest
 
@@ -23,6 +23,7 @@ jobs:
           extensions: intl
           ini-values: memory_limit=-1
           php-version: ${{ matrix.php-version }}
+      - run: curl -sLk https://raw.githubusercontent.com/kevincobain2000/cover-totalizer/master/install.sh | sh
 
       - name: Determine composer cache directory
         id: determine-composer-cache-directory
@@ -35,11 +36,27 @@ jobs:
           key: php-${{ matrix.php-version }}-composer-${{ hashFiles('**/composer.json') }}
           restore-keys: php-${{ matrix.php-version }}-composer-
 
-      - name: Install dependencies with composer
-        run: composer install --no-interaction --no-progress --no-suggest
-
-      - name: Create build directory
-        run: mkdir -p .build/logs
+      - uses: kevincobain2000/action-coveritup@v2
+        with:
+          type: composer-install-time
+          command: composer install --no-interaction --no-progress --no-suggest
+          record: runtime
 
       - name: Collect code coverage with Xdebug and phpunit/phpunit
-        run: vendor/bin/phpunit --coverage-clover=.build/logs/clover.xml
+        run: vendor/bin/phpunit --coverage-clover=coverage.xml
+      - uses: kevincobain2000/action-coveritup@v2
+        with:
+          type: coverage
+          command: ./cover-totalizer coverage.xml
+
+      - uses: kevincobain2000/action-coveritup@v2
+        with:
+          type: composer-dependencies
+          command: composer show -i --name-only 2>/dev/null | wc -l | awk '{print $NF}'
+
+      - name: "PHPCS"
+        run: vendor/bin/phpcs --ignore=views --standard=PSR2 src
+
+      - uses: kevincobain2000/action-coveritup@v2
+        with:
+          pr_comment: true
