@@ -4,6 +4,7 @@ namespace Kevincobain2000\LaravelEmailExceptions\Tests;
 
 use Exception;
 use Kevincobain2000\LaravelAlertNotifications\Dispatcher\AlertDispatcher;
+use Kevincobain2000\LaravelAlertNotifications\MicrosoftTeams\ExceptionOccurredCard;
 use Mail;
 use Mockery;
 use Orchestra\Testbench\TestCase;
@@ -77,5 +78,24 @@ class AlertDispatcherTest extends TestCase
     {
         $alert = new AlertDispatcher(new Exception(), []);
         $this->assertTrue(true);
+    }
+
+    public function testMicrosoftTeamsCardFormat()
+    {
+        $exception = new Exception('Test Exception');
+        $card = new ExceptionOccurredCard($exception, []);
+        $json = $card->getCard();
+
+        $this->assertArrayHasKey('@context', $json);
+        $this->assertArrayHasKey('@type', $json);
+        $this->assertArrayHasKey('body', $json);
+
+        $body = $json['body'];
+        $this->assertIsArray($body);
+
+        foreach ($body as $element) {
+            $this->assertArrayHasKey('type', $element);
+            $this->assertEquals('TextBlock', $element['type']);
+        }
     }
 }

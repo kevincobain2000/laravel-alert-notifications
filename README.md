@@ -1,4 +1,3 @@
-
 <h1 align="center">
   Laravel Alert Notifcations
 </h1>
@@ -165,6 +164,57 @@ class Handler extends ExceptionHandler
 | slack.enabled                 | (default true), false will not notify to slack                                |
 | slack.webhook                 | (default null), null will not notify to slack                                 |
 
+### Microsoft Teams Webhook JSON Format
+
+The code now supports the new Microsoft Teams webhook JSON format as specified in https://adaptivecards.io/schemas/adaptive-card.json.
+
+#### Sample JSON Payload
+
+```json
+{
+  "@type": "AdaptiveCard",
+  "@context": "https://adaptivecards.io/schemas/adaptive-card.json",
+  "version": "1.2",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "Environment: production"
+    },
+    {
+      "type": "TextBlock",
+      "text": "Server: example.com"
+    },
+    {
+      "type": "TextBlock",
+      "text": "Request Url: https://example.com/request"
+    },
+    {
+      "type": "TextBlock",
+      "text": "Exception: Exception"
+    },
+    {
+      "type": "TextBlock",
+      "text": "Message: Test Exception"
+    },
+    {
+      "type": "TextBlock",
+      "text": "Exception Code: 0"
+    },
+    {
+      "type": "TextBlock",
+      "text": "In File: /path/to/file.php on line 123"
+    },
+    {
+      "type": "TextBlock",
+      "text": "Stack Trace: #0 /path/to/file.php(123): function()"
+    },
+    {
+      "type": "TextBlock",
+      "text": "Context: array()"
+    }
+  ]
+}
+```
 
 ### Samples
 

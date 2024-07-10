@@ -18,56 +18,45 @@ class ExceptionOccurredCard
     public function getCard()
     {
         return [
-            '@type'      => 'MessageCard',
-            '@context'   => 'http://schema.org/extensions',
-            'summary'    => config('laravel_alert_notifications.microsoft_teams.cardSubject'),
-            'themeColor' => config('laravel_alert_notifications.themeColor'),
-            'title'      => config('laravel_alert_notifications.cardSubject'),
-            'sections'   => [
+            '@type'    => 'AdaptiveCard',
+            '@context' => 'https://adaptivecards.io/schemas/adaptive-card.json',
+            'version'  => '1.2',
+            'body'     => [
                 [
-                    'activityTitle'    => config('laravel_alert_notifications.microsoft_teams.cardSubject'),
-                    'activitySubtitle' => 'Error has occurred on '.config('app.name').' - '.config('app.name'),
-                    'activityImage'    => '',
-                    'facts'            => [
-                        [
-                            'name'  => 'Environment:',
-                            'value' => config('app.env'),
-                        ],
-                        [
-                            'name'  => 'Server:',
-                            'value' => Request::server('SERVER_NAME'),
-                        ],
-                        [
-                            'name'  => 'Request Url:',
-                            'value' => Request::fullUrl(),
-                        ],
-                        [
-                            'name'  => 'Exception:',
-                            'value' => get_class($this->exception),
-                        ],
-                        [
-                            'name'  => 'Message:',
-                            'value' => $this->exception->getMessage(),
-                        ],
-                        [
-                            'name'  => 'Exception Code:',
-                            'value' => $this->exception->getCode(),
-                        ],
-                        [
-                            'name'  => 'In File:',
-                            'value' => '<b style="color:red;">'
-                                        .$this->exception->getFile()
-                                        .' on line '.$this->exception->getLine().'</b>',
-                        ],
-                        [
-                            'name'  => 'Stack Trace:',
-                            'value' => '<pre>'.$this->exception->getTraceAsString().'</pre>',
-                        ],
-                        [
-                            'name'  => 'Context:',
-                            'value' => '<pre>$context = '.var_export($this->exceptionContext, true).';</pre>',
-                        ],
-                    ],
+                    'type' => 'TextBlock',
+                    'text' => 'Environment: ' . config('app.env'),
+                ],
+                [
+                    'type' => 'TextBlock',
+                    'text' => 'Server: ' . Request::server('SERVER_NAME'),
+                ],
+                [
+                    'type' => 'TextBlock',
+                    'text' => 'Request Url: ' . Request::fullUrl(),
+                ],
+                [
+                    'type' => 'TextBlock',
+                    'text' => 'Exception: ' . get_class($this->exception),
+                ],
+                [
+                    'type' => 'TextBlock',
+                    'text' => 'Message: ' . $this->exception->getMessage(),
+                ],
+                [
+                    'type' => 'TextBlock',
+                    'text' => 'Exception Code: ' . $this->exception->getCode(),
+                ],
+                [
+                    'type' => 'TextBlock',
+                    'text' => 'In File: ' . $this->exception->getFile() . ' on line ' . $this->exception->getLine(),
+                ],
+                [
+                    'type' => 'TextBlock',
+                    'text' => 'Stack Trace: ' . $this->exception->getTraceAsString(),
+                ],
+                [
+                    'type' => 'TextBlock',
+                    'text' => 'Context: ' . var_export($this->exceptionContext, true),
                 ],
             ],
         ];
