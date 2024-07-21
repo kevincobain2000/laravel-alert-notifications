@@ -18,54 +18,68 @@ class ExceptionOccurredCard
     public function getCard()
     {
         return [
-            '@type'      => 'MessageCard',
-            '@context'   => 'http://schema.org/extensions',
-            'summary'    => config('laravel_alert_notifications.microsoft_teams.cardSubject'),
-            'themeColor' => config('laravel_alert_notifications.themeColor'),
-            'title'      => config('laravel_alert_notifications.cardSubject'),
-            'sections'   => [
+            'type'        => 'message',
+            'attachments' => [
                 [
-                    'activityTitle'    => config('laravel_alert_notifications.microsoft_teams.cardSubject'),
-                    'activitySubtitle' => 'Error has occurred on '.config('app.name').' - '.config('app.name'),
-                    'activityImage'    => '',
-                    'facts'            => [
-                        [
-                            'name'  => 'Environment:',
-                            'value' => config('app.env'),
+                    'contentType' => 'application/vnd.microsoft.card.adaptive',
+                    'contentUrl'  => null,
+                    'content'     => [
+                        '\$schema'     => 'http://adaptivecards.io/schemas/adaptive-card.json',
+                        'type'        => 'AdaptiveCard',
+                        'version'     => '1.4',
+                        'accentColor' => 'bf0000',
+                        'body'        => [
+                            [
+                                'type'   => 'TextBlock',
+                                'text'   => config('laravel_alert_notifications.microsoft_teams.cardSubject'),
+                                'id'     => 'title',
+                                'size'   => 'large',
+                                'weight' => 'bolder',
+                                'color'  => 'accent',
+                            ],
+                            [
+                                'type'  => 'FactSet',
+                                'facts' => [
+                                    [
+                                        'title' => 'Environment:',
+                                        'value' => config('app.env'),
+                                    ],
+                                    [
+                                        'title' => 'Server:',
+                                        'value' => Request::server('SERVER_NAME'),
+                                    ],
+                                    [
+                                        'title' => 'Request Url:',
+                                        'value' => Request::fullUrl(),
+                                    ],
+                                    [
+                                        'title' => 'Exception:',
+                                        'value' => get_class($this->exception),
+                                    ],
+                                    [
+                                        'title' => 'Message:',
+                                        'value' => $this->exception->getMessage(),
+                                    ],
+                                    [
+                                        'title' => 'Exception Code:',
+                                        'value' => $this->exception->getCode(),
+                                    ],
+                                    [
+                                        'title' => 'In File:',
+                                        'value' => $this->exception->getFile() .' on line '.$this->exception->getLine(),
+                                    ],
+                                ],
+                                'id' => 'acFactSet',
+                            ],
+                            [
+                                'type'        => 'CodeBlock',
+                                'codeSnippet' => $this->exception->getTraceAsString(),
+                                'fontType'    => 'monospace',
+                                'wrap'        => true,
+                            ],
                         ],
-                        [
-                            'name'  => 'Server:',
-                            'value' => Request::server('SERVER_NAME'),
-                        ],
-                        [
-                            'name'  => 'Request Url:',
-                            'value' => Request::fullUrl(),
-                        ],
-                        [
-                            'name'  => 'Exception:',
-                            'value' => get_class($this->exception),
-                        ],
-                        [
-                            'name'  => 'Message:',
-                            'value' => $this->exception->getMessage(),
-                        ],
-                        [
-                            'name'  => 'Exception Code:',
-                            'value' => $this->exception->getCode(),
-                        ],
-                        [
-                            'name'  => 'In File:',
-                            'value' => '<b style="color:red;">'
-                                        .$this->exception->getFile()
-                                        .' on line '.$this->exception->getLine().'</b>',
-                        ],
-                        [
-                            'name'  => 'Stack Trace:',
-                            'value' => '<pre>'.$this->exception->getTraceAsString().'</pre>',
-                        ],
-                        [
-                            'name'  => 'Context:',
-                            'value' => '<pre>$context = '.var_export($this->exceptionContext, true).';</pre>',
+                        'msteams'     => [
+                            'width' => 'Full',
                         ],
                     ],
                 ],

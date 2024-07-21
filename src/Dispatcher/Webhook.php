@@ -10,6 +10,9 @@ class Webhook
     {
         $client = new Client();
         $result = $client->request($method, $url, [
+            'headers'         => [
+                'Content-Type' => 'application/json',
+            ],
             'proxy'           => $proxy,
             'connect_timeout' => 5.0,
             'timeout'         => 5.0,
