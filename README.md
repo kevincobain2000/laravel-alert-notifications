@@ -15,14 +15,6 @@
 [![All Contributors](https://img.shields.io/badge/all_contributors-6-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
-![composer-install-time](https://coveritup.app/badge?org=kevincobain2000&repo=laravel-alert-notifications&type=composer-install-time&branch=master)
-![coverage](https://coveritup.app/badge?org=kevincobain2000&repo=laravel-alert-notifications&type=coverage&branch=master)
-![composer-dependencies](https://coveritup.app/badge?org=kevincobain2000&repo=laravel-alert-notifications&type=composer-dependencies&branch=master)
-
-![composer-install-time](https://coveritup.app/chart?org=kevincobain2000&repo=laravel-alert-notifications&type=composer-install-time&output=svg&width=160&height=160&branch=master)
-![coverage](https://coveritup.app/chart?org=kevincobain2000&repo=laravel-alert-notifications&type=coverage&output=svg&width=160&height=160&branch=master)
-![composer-dependencies](https://coveritup.app/chart?org=kevincobain2000&repo=laravel-alert-notifications&type=composer-dependencies&output=svg&width=160&height=160&branch=master)
-
 
 | Channels        | Progress              |
 | :-------        | :---------            |
