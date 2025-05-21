@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Mail;
 use Kevincobain2000\LaravelAlertNotifications\Mail\ExceptionOccurredMail;
 use Kevincobain2000\LaravelAlertNotifications\MicrosoftTeams\ExceptionOccurredCard;
 use Kevincobain2000\LaravelAlertNotifications\MicrosoftTeams\Teams;
+use Kevincobain2000\LaravelAlertNotifications\PagerDuty\ExceptionOccurredEvent;
+use Kevincobain2000\LaravelAlertNotifications\PagerDuty\PagerDuty;
 use Kevincobain2000\LaravelAlertNotifications\Slack\ExceptionOccurredPayload;
 use Kevincobain2000\LaravelAlertNotifications\Slack\Slack;
 use Throwable;
@@ -67,6 +69,10 @@ class AlertDispatcher
             Slack::send(new ExceptionOccurredPayload($this->exception, $this->exceptionContext));
         }
 
+        if ($this->shouldPagerDuty()) {
+            PagerDuty::send(new ExceptionOccurredEvent($this->exception, $this->notificationLevel, $this->exceptionContext));
+        }
+
         return true;
     }
 
@@ -91,5 +97,11 @@ class AlertDispatcher
     {
         return config('laravel_alert_notifications.slack.enabled')
             && config('laravel_alert_notifications.slack.webhook');
+    }
+
+    protected function shouldPagerDuty(): bool
+    {
+        return config('laravel_alert_notifications.pager_duty.enabled')
+            && config('laravel_alert_notifications.pager_duty.integration_key');
     }
 }

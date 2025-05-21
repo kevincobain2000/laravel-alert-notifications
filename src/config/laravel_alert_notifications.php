@@ -55,6 +55,9 @@ return [
         'image'    => null,
     ],
     'pager_duty' => [
-        'enabled' => true,
+        'enabled'            => true,
+        'proxy'              => env('ALERT_NOTIFICATION_CURL_PROXY', null),
+        'events_v2_endpoint' => env('ALERT_NOTIFICATION_PAGER_DUTY_EVENTS_V2_ENDPOINT', 'https://events.pagerduty.com/v2/enqueue'),
+        'integration_key'    => env('ALERT_NOTIFICATION_PAGER_DUTY_INTEGRATION_KEY', null),
     ],
 ];

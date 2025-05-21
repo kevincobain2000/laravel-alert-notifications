@@ -16,12 +16,12 @@
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 
-| Channels        | Progress              |
-| :-------        | :---------            |
-| Email           | Supported             |
-| Microsoft Teams | Supported             |
-| Slack           | Supported             |
-| Pager Duty      | Open to pull requests |
+| Channels        | Progress  |
+| :-------        | :-------- |
+| Email           | Supported |
+| Microsoft Teams | Supported |
+| Slack           | Supported |
+| Pager Duty      | Supported |
 
 ### Installation
 
@@ -80,6 +80,7 @@ ALERT_NOTIFICATION_MAIL_EMERGENCY_TO_ADDRESS=
 ALERT_NOTIFICATION_CACHE_DRIVER=file
 ALERT_NOTIFICATION_MICROSOFT_TEAMS_WEBHOOK=
 ALERT_NOTIFICATION_SLACK_WEBHOOK=
+ALERT_NOTIFICATION_PAGER_DUTY_INTEGRATION_KEY=
 ALERT_NOTIFICATION_CURL_PROXY=
 ```
 
@@ -127,36 +128,38 @@ class Handler extends ExceptionHandler
 
 ### Config
 
-| config/env key                | purpose                                                                       |
-| :----------                   | :--------------                                                               |
-| throttle_enabled              | (default true)  If false then library will send alerts without any throttling |
-| throttle_duration_minutes     | (default 5 mins) If an exception has been notified                            |
-|                               | This will next notify after 5 mins when same exception occurs                 |
-| cache_prefix                  | This is a prefix for cache key. Your cache key will look like                 |
-|                               | ``laravel-alert-notifications-ExceptionClass-ExceptionCode``                  |
-| ALERT_NOTIFICATION_CURL_PROXY | If your slack/MS teams require proxy, then set it up accordingly              |
-| default_notification_level    | Default notification level                                                    |
-| exclude_notification_levels   | Do not send notification if it is of one of the listed level                  |
-| mail                          | E-mail config array:                                                          |
-| mail.enabled                  | (default true), false will not notify to email                                |
-| mail.fromAddress              | (default null), null will not notify to email                                 |
-| mail.toAddress                | Default recipient e-mail address                                              |
-| mail.subject                  | Default e-mail subject. May contain placeholders replaced afterwards with     |
-|                               | correspondent exception data:                                                 |
-|                               | ``%ExceptionMessage%`` => ``$e->getMessage()``                                |
-|                               | ``%ExceptionCode%``    => ``$e->getCode()``                                   |
-|                               | ``%ExceptionType%``    => ``$e->getType()``                                   |
-|                               | ``%ExceptionLevel%``   => ``current notification level``                      |
-|                               | ex. ``'subject' => 'Exception [%ExceptionType%] has ocurred``'                |                                 |
-| mail.#level#                  | Configs for each notification level                                           |
-|                               | notification levels refer to those defined in ``\Psr\Log\LogLevel``           |
-| mail.#level#.toAddress        | (default mail.to_address), #level# notification recipient e-mail              |
-| mail.#level#.subject          | #level# notification e-mail subject                                           |
-| microsoft_teams.enabled       | (default true), false will not notify to teams                                |
-| microsoft_teams.webhook       | (default null), null will not notify to teams                                 |
-| slack.enabled                 | (default true), false will not notify to slack                                |
-| slack.webhook                 | (default null), null will not notify to slack                                 |
-
+| config/env key                | purpose                                                                           |
+| :----------                   | :--------------                                                                   |
+| throttle_enabled              | (default true)  If false then library will send alerts without any throttling     |
+| throttle_duration_minutes     | (default 5 mins) If an exception has been notified                                |
+|                               | This will next notify after 5 mins when same exception occurs                     |
+| cache_prefix                  | This is a prefix for cache key. Your cache key will look like                     |
+|                               | ``laravel-alert-notifications-ExceptionClass-ExceptionCode``                      |
+| ALERT_NOTIFICATION_CURL_PROXY | If your slack/MS teams require proxy, then set it up accordingly                  |
+| default_notification_level    | Default notification level                                                        |
+| exclude_notification_levels   | Do not send notification if it is of one of the listed level                      |
+| mail                          | E-mail config array:                                                              |
+| mail.enabled                  | (default true), false will not notify to email                                    |
+| mail.fromAddress              | (default null), null will not notify to email                                     |
+| mail.toAddress                | Default recipient e-mail address                                                  |
+| mail.subject                  | Default e-mail subject. May contain placeholders replaced afterwards with         |
+|                               | correspondent exception data:                                                     |
+|                               | ``%ExceptionMessage%`` => ``$e->getMessage()``                                    |
+|                               | ``%ExceptionCode%``    => ``$e->getCode()``                                       |
+|                               | ``%ExceptionType%``    => ``$e->getType()``                                       |
+|                               | ``%ExceptionLevel%``   => ``current notification level``                          |
+|                               | ex. ``'subject' => 'Exception [%ExceptionType%] has ocurred``'                    |                                 |
+| mail.#level#                  | Configs for each notification level                                               |
+|                               | notification levels refer to those defined in ``\Psr\Log\LogLevel``               |
+| mail.#level#.toAddress        | (default mail.to_address), #level# notification recipient e-mail                  |
+| mail.#level#.subject          | #level# notification e-mail subject                                               |
+| microsoft_teams.enabled       | (default true), false will not notify to teams                                    |
+| microsoft_teams.webhook       | (default null), null will not notify to teams                                     |
+| slack.enabled                 | (default true), false will not notify to slack                                    |
+| slack.webhook                 | (default null), null will not notify to slack                                     |
+| pager_duty.enabled            | (default true), false will not notify to pager duty                               |
+| pager_duty.events_v2_endpoint | (defautl https://events.pagerduty.com/v2/enqueue), should not need to change this |
+| pager_duty.integration_key    | (default null), null with not notify to pager duty                                |
 
 ### Samples
 
@@ -171,6 +174,10 @@ class Handler extends ExceptionHandler
 #### Slack
 
 <img src="https://i.imgur.com/jNoZLED.png" alt="Slack">
+
+#### Pager Duty
+
+
 
 ### References
 
