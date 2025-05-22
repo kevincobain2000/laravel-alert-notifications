@@ -3,6 +3,7 @@
 namespace Kevincobain2000\LaravelAlertNotifications\PagerDuty;
 
 use Illuminate\Support\Facades\Request;
+use Psr\Log\LogLevel;
 
 class ExceptionOccurredEvent
 {
@@ -25,13 +26,15 @@ class ExceptionOccurredEvent
                 'summary'   => get_class($this->exception),
                 'timestamp' => now()->toIso8601String(),
                 'severity'  => match ($this->notificationLevel) {
-                    'notice'    => 'info',
-                    'warning'   => 'warning',
-                    'error'     => 'error',
-                    'critical'  => 'critical',
-                    'alert'     => 'critical',
-                    'emergency' => 'critical', 
-                    default     => 'error',
+                    LogLevel::EMERGENCY => 'critical',
+                    LogLevel::ALERT     => 'critical',
+                    LogLevel::CRITICAL  => 'critical',
+                    LogLevel::ERROR     => 'error',
+                    LogLevel::WARNING   => 'warning',
+                    LogLevel::NOTICE    => 'info',
+                    LogLevel::INFO      => 'info',
+                    LogLevel::DEBUG     => 'info',
+                    default             => 'error',
                 },
                 'source'    => Request::server('SERVER_NAME'),
                 'component' => config('app.name') ?? null,
