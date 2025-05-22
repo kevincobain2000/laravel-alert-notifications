@@ -42,6 +42,7 @@ class ExceptionOccurredEvent
                 // 'class'     => null,
                 'custom_details' => array_merge([
                     'environment'       => config('app.env'),
+                    'host'              => trim((string) shell_exec('hostname')),
                     'request_method'    => Request::method(),
                     'request_url'       => Request::fullUrl(),
                     'file'              => $this->exception->getFile(),
