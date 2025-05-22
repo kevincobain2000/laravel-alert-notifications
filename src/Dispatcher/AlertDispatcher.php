@@ -21,10 +21,10 @@ class AlertDispatcher
     public $notificationLevel;
 
     protected $dispatchMethods = [
-        'mail'           => 'sendMail',
-        'microsoftTeams' => 'sendMicrosoftTeams',
-        'slack'          => 'sendSlack',
-        'pagerDuty'      => 'sendPagerDuty',
+        'mail',
+        'microsoftTeams',
+        'slack',
+        'pagerDuty',
     ];
 
     public function __construct(
@@ -68,13 +68,13 @@ class AlertDispatcher
         // Attempt all notification channels via try/catch blocks to ensure
         // if one fails, the others can still be attempted.
         $exceptions = [];
-        foreach ($this->dispatchMethods as $method => $dispatch) {
+        foreach ($this->dispatchMethods as $method) {
             try {
                 if (! $this->{"should" . ucfirst($method)}()) {
                     continue;
                 }
 
-                $this->{$dispatch}();
+                $this->{"send" . ucfirst($method)}();
             } catch (Throwable $e) {
                 // If the dispatch method fails, we call the handler method to handle the exception
                 // and then throw a new AlertDispatchFailedException with the original exception.
