@@ -57,20 +57,38 @@ class AlertDispatcher
 
     protected function dispatch()
     {
-        if ($this->shouldMail()) {
-            Mail::send(new ExceptionOccurredMail($this->exception, $this->notificationLevel, $this->exceptionContext));
+        // Attempt all notification channels via try/catch blocks to ensure
+        // if one fails, the others can still be attempted.
+        try {
+            if ($this->shouldMail()) {
+                Mail::send(new ExceptionOccurredMail($this->exception, $this->notificationLevel, $this->exceptionContext));
+            }
+        } catch (\Exception $e) {
+            // Handle the exception if needed
         }
 
-        if ($this->shouldMicrosoftTeams()) {
-            Teams::send(new ExceptionOccurredCard($this->exception, $this->exceptionContext));
+        try {
+            if ($this->shouldMicrosoftTeams()) {
+                Teams::send(new ExceptionOccurredCard($this->exception, $this->exceptionContext));
+            }
+        } catch (\Exception $e) {
+            // Handle the exception if needed
         }
 
-        if ($this->shouldSlack()) {
-            Slack::send(new ExceptionOccurredPayload($this->exception, $this->exceptionContext));
+        try {
+            if ($this->shouldSlack()) {
+                Slack::send(new ExceptionOccurredPayload($this->exception, $this->exceptionContext));
+            }
+        } catch (\Exception $e) {
+            // Handle the exception if needed
         }
 
-        if ($this->shouldPagerDuty()) {
-            PagerDuty::send(new ExceptionOccurredEvent($this->exception, $this->notificationLevel, $this->exceptionContext));
+        try {
+            if ($this->shouldPagerDuty()) {
+                PagerDuty::send(new ExceptionOccurredEvent($this->exception, $this->notificationLevel, $this->exceptionContext));
+            }
+        } catch (\Exception $e) {
+            // Handle the exception if needed
         }
 
         return true;
