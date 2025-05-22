@@ -23,7 +23,7 @@ class ExceptionOccurredEvent
         // Commented out available keys for reference
         return [
             'payload' => [
-                'summary'   => get_class($this->exception),
+                'summary'   => 'Exception Occurred: ' . get_class($this->exception),
                 'timestamp' => now()->toIso8601String(),
                 'severity'  => match ($this->notificationLevel) {
                     LogLevel::EMERGENCY => 'critical',
