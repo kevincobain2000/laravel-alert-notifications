@@ -3,6 +3,7 @@
 namespace Kevincobain2000\LaravelAlertNotifications\Dispatcher;
 
 use Illuminate\Support\Facades\Mail;
+use Kevincobain2000\LaravelAlertNotifications\Exceptions\AlertDispatchFailedException;
 use Kevincobain2000\LaravelAlertNotifications\Mail\ExceptionOccurredMail;
 use Kevincobain2000\LaravelAlertNotifications\MicrosoftTeams\ExceptionOccurredCard;
 use Kevincobain2000\LaravelAlertNotifications\MicrosoftTeams\Teams;
@@ -57,38 +58,53 @@ class AlertDispatcher
 
     protected function dispatch()
     {
+        $exceptions = [];
+
         // Attempt all notification channels via try/catch blocks to ensure
         // if one fails, the others can still be attempted.
         try {
             if ($this->shouldMail()) {
                 Mail::send(new ExceptionOccurredMail($this->exception, $this->notificationLevel, $this->exceptionContext));
             }
-        } catch (\Exception $e) {
-            // Handle the exception if needed
+        } catch (Throwable $e) {
+            $exceptions[] = AlertDispatchFailedException::mailFailed($e);
         }
 
         try {
             if ($this->shouldMicrosoftTeams()) {
                 Teams::send(new ExceptionOccurredCard($this->exception, $this->exceptionContext));
             }
-        } catch (\Exception $e) {
-            // Handle the exception if needed
+        } catch (Throwable $e) {
+            $exceptions[] = AlertDispatchFailedException::microsoftTeamsFailed($e);
         }
 
         try {
             if ($this->shouldSlack()) {
                 Slack::send(new ExceptionOccurredPayload($this->exception, $this->exceptionContext));
             }
-        } catch (\Exception $e) {
-            // Handle the exception if needed
+        } catch (Throwable $e) {
+            $exceptions[] = AlertDispatchFailedException::slackFailed($e);
         }
 
         try {
             if ($this->shouldPagerDuty()) {
                 PagerDuty::send(new ExceptionOccurredEvent($this->exception, $this->notificationLevel, $this->exceptionContext));
             }
-        } catch (\Exception $e) {
-            // Handle the exception if needed
+        } catch (Throwable $e) {
+            $exceptions[] = AlertDispatchFailedException::pagerDutyFailed($e);
+        }
+
+        // If any exceptions were thrown during the dispatch process, we throw a new
+        // AlertDispatchFailedException that contains all the exceptions that were thrown.
+        // This allows the user to see all the failures in one place, rather than just
+        // the last one that was thrown. This is useful for debugging and understanding
+        // what went wrong during the dispatch process.
+        if (!empty($exceptions)) {
+            $finalException = null;
+            foreach ($exceptions as $exception) {
+                $finalException = new AlertDispatchFailedException($exception->getMessage(), $exception->getCode(), $finalException);
+            }
+            throw $finalException;
         }
 
         return true;
