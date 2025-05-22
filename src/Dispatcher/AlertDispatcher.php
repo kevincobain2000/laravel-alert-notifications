@@ -20,6 +20,13 @@ class AlertDispatcher
     public $dontAlertExceptions;
     public $notificationLevel;
 
+    protected $dispatchMethods = [
+        'mail'           => 'sendMail',
+        'microsoftTeams' => 'sendMicrosoftTeams',
+        'slack'          => 'sendSlack',
+        'pagerDuty'      => 'sendPagerDuty',
+    ];
+
     public function __construct(
         Throwable $exception,
         array $dontAlertExceptions = [],
@@ -58,40 +65,21 @@ class AlertDispatcher
 
     protected function dispatch()
     {
-        $exceptions = [];
-
         // Attempt all notification channels via try/catch blocks to ensure
         // if one fails, the others can still be attempted.
-        try {
-            if ($this->shouldMail()) {
-                Mail::send(new ExceptionOccurredMail($this->exception, $this->notificationLevel, $this->exceptionContext));
-            }
-        } catch (Throwable $e) {
-            $exceptions[] = AlertDispatchFailedException::mailFailed($e);
-        }
+        $exceptions = [];
+        foreach ($this->dispatchMethods as $method => $dispatch) {
+            try {
+                if (! $this->{"should" . ucfirst($method)}()) {
+                    continue;
+                }
 
-        try {
-            if ($this->shouldMicrosoftTeams()) {
-                Teams::send(new ExceptionOccurredCard($this->exception, $this->exceptionContext));
+                $this->{$dispatch}();
+            } catch (Throwable $e) {
+                // If the dispatch method fails, we call the handler method to handle the exception
+                // and then throw a new AlertDispatchFailedException with the original exception.
+                $exceptions[] = AlertDispatchFailedException::{"{$method}Failed"}();
             }
-        } catch (Throwable $e) {
-            $exceptions[] = AlertDispatchFailedException::microsoftTeamsFailed($e);
-        }
-
-        try {
-            if ($this->shouldSlack()) {
-                Slack::send(new ExceptionOccurredPayload($this->exception, $this->exceptionContext));
-            }
-        } catch (Throwable $e) {
-            $exceptions[] = AlertDispatchFailedException::slackFailed($e);
-        }
-
-        try {
-            if ($this->shouldPagerDuty()) {
-                PagerDuty::send(new ExceptionOccurredEvent($this->exception, $this->notificationLevel, $this->exceptionContext));
-            }
-        } catch (Throwable $e) {
-            $exceptions[] = AlertDispatchFailedException::pagerDutyFailed($e);
         }
 
         // If any exceptions were thrown during the dispatch process, we throw a new
@@ -121,10 +109,20 @@ class AlertDispatcher
             && config('laravel_alert_notifications.mail.toAddress');
     }
 
+    protected function sendMail(): void
+    {
+        Mail::send(new ExceptionOccurredMail($this->exception, $this->notificationLevel, $this->exceptionContext));
+    }
+
     protected function shouldMicrosoftTeams(): bool
     {
         return config('laravel_alert_notifications.microsoft_teams.enabled')
             && config('laravel_alert_notifications.microsoft_teams.webhook');
+    }
+
+    protected function sendMicrosoftTeams(): void
+    {
+        Teams::send(new ExceptionOccurredCard($this->exception, $this->exceptionContext));
     }
 
     protected function shouldSlack(): bool
@@ -133,9 +131,19 @@ class AlertDispatcher
             && config('laravel_alert_notifications.slack.webhook');
     }
 
+    protected function sendSlack(): void
+    {
+        Slack::send(new ExceptionOccurredPayload($this->exception, $this->exceptionContext));
+    }
+
     protected function shouldPagerDuty(): bool
     {
         return config('laravel_alert_notifications.pager_duty.enabled')
             && config('laravel_alert_notifications.pager_duty.integration_key');
+    }
+
+    protected function sendPagerDuty(): void
+    {
+        PagerDuty::send(new ExceptionOccurredEvent($this->exception, $this->notificationLevel, $this->exceptionContext));
     }
 }
