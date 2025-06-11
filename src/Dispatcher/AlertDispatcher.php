@@ -15,17 +15,17 @@ use Throwable;
 
 class AlertDispatcher
 {
-    public $exception;
-    public $exceptionContext;
-    public $dontAlertExceptions;
-    public $notificationLevel;
-
-    protected $dispatchMethods = [
+    public const DISPATCH_METHODS = [
         'mail',
         'microsoftTeams',
         'slack',
         'pagerDuty',
     ];
+
+    public $exception;
+    public $exceptionContext;
+    public $dontAlertExceptions;
+    public $notificationLevel;
 
     public function __construct(
         Throwable $exception,
@@ -68,7 +68,7 @@ class AlertDispatcher
         // Attempt all notification channels via try/catch blocks to ensure
         // if one fails, the others can still be attempted.
         $exceptions = [];
-        foreach ($this->dispatchMethods as $method) {
+        foreach (self::DISPATCH_METHODS as $method) {
             try {
                 if (! $this->{"should" . ucfirst($method)}()) {
                     continue;
