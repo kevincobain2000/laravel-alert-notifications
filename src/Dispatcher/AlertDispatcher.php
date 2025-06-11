@@ -52,7 +52,7 @@ class AlertDispatcher
     protected function shouldAlert()
     {
         $levelsNotToNotify = config('laravel_alert_notifications.exclude_notification_levels') ?? [];
-        if ($this->isDonotAlertException() || in_array($this->notificationLevel, $levelsNotToNotify)) {
+        if ($this->isDoNotAlertException() || in_array($this->notificationLevel, $levelsNotToNotify)) {
             return false;
         }
 
@@ -98,7 +98,7 @@ class AlertDispatcher
         return true;
     }
 
-    protected function isDonotAlertException(): bool
+    protected function isDoNotAlertException(): bool
     {
         return in_array(get_class($this->exception), $this->dontAlertExceptions);
     }
