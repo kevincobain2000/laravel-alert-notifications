@@ -204,10 +204,10 @@ class AlertDispatcherTest extends TestCase
     public function testExceptionCanBeSilenced()
     {
         $alertDispatcher = new AlertDispatcher(new Exception('Test Exception'), []);
-        $this->assertFalse($alertDispatcher->isDoNotAlertException());
+        $this->assertFalse($alertDispatcher->isDontAlertException());
 
         $alertDispatcher->dontAlertExceptions = [Exception::class];
-        $this->assertTrue($alertDispatcher->isDoNotAlertException());
+        $this->assertTrue($alertDispatcher->isDontAlertException());
     }
 
     public function testShouldAlert()
