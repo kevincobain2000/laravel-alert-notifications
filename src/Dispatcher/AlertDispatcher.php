@@ -78,7 +78,7 @@ class AlertDispatcher
             } catch (Throwable $e) {
                 // If the dispatch method fails, we call the handler method to handle the exception
                 // and then throw a new AlertDispatchFailedException with the original exception.
-                $exceptions[] = AlertDispatchFailedException::{"{$method}Failed"}();
+                $exceptions[] = AlertDispatchFailedException::{"{$method}Failed"}($e);
             }
         }
 
