@@ -38,50 +38,185 @@ class AlertDispatcherTest extends TestCase
         )->makePartial()->shouldAllowMockingProtectedMethods();
     }
 
-    public function testAlert()
+    public function testObjectCanBeInstantiated()
     {
-        $exception                                   = new Exception('Test Exception');
-        $this->alertHandlerMock->exception           = $exception;
-        $this->alertHandlerMock->dontAlertExceptions = [];
+        $this->assertInstanceOf(AlertDispatcher::class, new AlertDispatcher(new Exception('Test Exception'),));
+    }
 
-        config($this->config);
+    public static function dispatchMethodsShouldProvider()
+    {
+        yield [
+            'method' => 'shouldMail',
+            'config' => [
+                'laravel_alert_notifications.mail.enabled'   => true,
+                'laravel_alert_notifications.mail.toAddress' => 'example@example.com',
+            ],
+            'shouldDispatch' => true,
+        ];
 
+        yield [
+            'method' => 'shouldMail',
+            'config' => [
+                'laravel_alert_notifications.mail.enabled'   => false,
+                'laravel_alert_notifications.mail.toAddress' => 'example@example.com',
+            ],
+            'shouldDispatch' => false,
+        ];
+
+        yield [
+            'method' => 'shouldMail',
+            'config' => [
+                'laravel_alert_notifications.mail.enabled'   => true,
+                'laravel_alert_notifications.mail.toAddress' => null,
+            ],
+            'shouldDispatch' => false,
+        ];
+
+        yield [
+            'method' => 'shouldMail',
+            'config' => [
+                'laravel_alert_notifications.mail.enabled'   => false,
+                'laravel_alert_notifications.mail.toAddress' => null,
+            ],
+            'shouldDispatch' => false,
+        ];
+
+        yield [
+            'method' => 'shouldMicrosoftTeams',
+            'config' => [
+                'laravel_alert_notifications.microsoft_teams.enabled' => true,
+                'laravel_alert_notifications.microsoft_teams.webhook' => 'http://example.com',
+            ],
+            'shouldDispatch' => true,
+        ];
+
+        yield [
+            'method' => 'shouldMicrosoftTeams',
+            'config' => [
+                'laravel_alert_notifications.microsoft_teams.enabled' => false,
+                'laravel_alert_notifications.microsoft_teams.webhook' => 'http://example.com',
+            ],
+            'shouldDispatch' => false,
+        ];
+
+        yield [
+            'method' => 'shouldMicrosoftTeams',
+            'config' => [
+                'laravel_alert_notifications.microsoft_teams.enabled' => true,
+                'laravel_alert_notifications.microsoft_teams.webhook' => null,
+            ],
+            'shouldDispatch' => false,
+        ];
+
+        yield [
+            'method' => 'shouldMicrosoftTeams',
+            'config' => [
+                'laravel_alert_notifications.microsoft_teams.enabled' => false,
+                'laravel_alert_notifications.microsoft_teams.webhook' => null,
+            ],
+            'shouldDispatch' => false,
+        ];
+
+        yield [
+            'method' => 'shouldSlack',
+            'config' => [
+                'laravel_alert_notifications.slack.enabled' => true,
+                'laravel_alert_notifications.slack.webhook' => 'http://example.com',
+            ],
+            'shouldDispatch' => true,
+        ];
+
+        yield [
+            'method' => 'shouldSlack',
+            'config' => [
+                'laravel_alert_notifications.slack.enabled' => false,
+                'laravel_alert_notifications.slack.webhook' => 'http://example.com',
+            ],
+            'shouldDispatch' => false,
+        ];
+
+        yield [
+            'method' => 'shouldSlack',
+            'config' => [
+                'laravel_alert_notifications.slack.enabled' => true,
+                'laravel_alert_notifications.slack.webhook' => null,
+            ],
+            'shouldDispatch' => false,
+        ];
+
+        yield [
+            'method' => 'shouldSlack',
+            'config' => [
+                'laravel_alert_notifications.slack.enabled' => false,
+                'laravel_alert_notifications.slack.webhook' => null,
+            ],
+            'shouldDispatch' => false,
+        ];
+
+        yield [
+            'method' => 'shouldPagerDuty',
+            'config' => [
+                'laravel_alert_notifications.pager_duty.enabled'         => true,
+                'laravel_alert_notifications.pager_duty.integration_key' => 'test',
+            ],
+            'shouldDispatch' => true,
+        ];
+
+        yield [
+            'method' => 'shouldPagerDuty',
+            'config' => [
+                'laravel_alert_notifications.pager_duty.enabled'         => false,
+                'laravel_alert_notifications.pager_duty.integration_key' => 'test',
+            ],
+            'shouldDispatch' => false,
+        ];
+
+        yield [
+            'method' => 'shouldPagerDuty',
+            'config' => [
+                'laravel_alert_notifications.pager_duty.enabled'         => true,
+                'laravel_alert_notifications.pager_duty.integration_key' => null,
+            ],
+            'shouldDispatch' => false,
+        ];
+
+        yield [
+            'method' => 'shouldPagerDuty',
+            'config' => [
+                'laravel_alert_notifications.pager_duty.enabled'         => false,
+                'laravel_alert_notifications.pager_duty.integration_key' => null,
+            ],
+            'shouldDispatch' => false,
+        ];
+    }
+
+    #[\PHPUnit\Framework\Attributes\DataProvider('dispatchMethodsShouldProvider')]
+    public function testDispatchMethodsShouldSend(string $method, array $config, bool $shouldDispatch)
+    {
         Mail::fake();
+        config($config);
 
-        $actual = $this->alertHandlerMock->shouldMail();
-        $this->assertTrue($actual);
+        $alertDispatcher = new AlertDispatcher(new Exception('Test Exception'));
 
-        $actual = $this->alertHandlerMock->shouldMicrosoftTeams();
-        $this->assertTrue($actual);
+        $this->assertEquals($shouldDispatch, $alertDispatcher->{$method}());
+    }
 
-        $actual = $this->alertHandlerMock->shouldSlack();
-        $this->assertTrue($actual);
+    public function testExceptionCanBeSilenced()
+    {
+        $alertDispatcher = new AlertDispatcher(new Exception('Test Exception'), []);
+        $this->assertFalse($alertDispatcher->isDoNotAlertException());
 
-        $actual = $this->alertHandlerMock->shouldPagerDuty();
-        $this->assertTrue($actual);
-
-        $this->alertHandlerMock->dontAlertExceptions = [Exception::class];
-        $actual                                      = $this->alertHandlerMock->isDonotAlertException();
-        $this->assertTrue($actual);
+        $alertDispatcher->dontAlertExceptions = [Exception::class];
+        $this->assertTrue($alertDispatcher->isDoNotAlertException());
     }
 
     public function testShouldAlert()
     {
-        $exception                                   = new Exception('Test Exception');
-        $this->alertHandlerMock->exception           = $exception;
-        $this->alertHandlerMock->dontAlertExceptions = [];
-
+        Mail::fake();
         config($this->config);
 
-        Mail::fake();
+        $alertDispatcher = new AlertDispatcher(new Exception('Test Exception'));
 
-        $actual = $this->alertHandlerMock->shouldAlert();
-        $this->assertTrue($actual);
-    }
-
-    public function testBasic()
-    {
-        $alert = new AlertDispatcher(new Exception(), []);
-        $this->assertTrue(true);
+        $this->assertTrue($alertDispatcher->shouldAlert());
     }
 }
