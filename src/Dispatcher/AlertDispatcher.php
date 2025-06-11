@@ -49,7 +49,7 @@ class AlertDispatcher
         return false;
     }
 
-    protected function shouldAlert()
+    public function shouldAlert()
     {
         $levelsNotToNotify = config('laravel_alert_notifications.exclude_notification_levels') ?? [];
         if ($this->isDoNotAlertException() || in_array($this->notificationLevel, $levelsNotToNotify)) {
@@ -98,12 +98,12 @@ class AlertDispatcher
         return true;
     }
 
-    protected function isDoNotAlertException(): bool
+    public function isDoNotAlertException(): bool
     {
         return in_array(get_class($this->exception), $this->dontAlertExceptions);
     }
 
-    protected function shouldMail(): bool
+    public function shouldMail(): bool
     {
         return config('laravel_alert_notifications.mail.enabled')
             && config('laravel_alert_notifications.mail.toAddress');
@@ -114,7 +114,7 @@ class AlertDispatcher
         Mail::send(new ExceptionOccurredMail($this->exception, $this->notificationLevel, $this->exceptionContext));
     }
 
-    protected function shouldMicrosoftTeams(): bool
+    public function shouldMicrosoftTeams(): bool
     {
         return config('laravel_alert_notifications.microsoft_teams.enabled')
             && config('laravel_alert_notifications.microsoft_teams.webhook');
@@ -125,7 +125,7 @@ class AlertDispatcher
         Teams::send(new ExceptionOccurredCard($this->exception, $this->exceptionContext));
     }
 
-    protected function shouldSlack(): bool
+    public function shouldSlack(): bool
     {
         return config('laravel_alert_notifications.slack.enabled')
             && config('laravel_alert_notifications.slack.webhook');
@@ -136,7 +136,7 @@ class AlertDispatcher
         Slack::send(new ExceptionOccurredPayload($this->exception, $this->exceptionContext));
     }
 
-    protected function shouldPagerDuty(): bool
+    public function shouldPagerDuty(): bool
     {
         return config('laravel_alert_notifications.pager_duty.enabled')
             && config('laravel_alert_notifications.pager_duty.integration_key');
