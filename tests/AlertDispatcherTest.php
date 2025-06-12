@@ -184,7 +184,9 @@ class AlertDispatcherTest extends TestCase
         ];
     }
 
-    #[\PHPUnit\Framework\Attributes\DataProvider('dispatchMethodsShouldProvider')]
+    /**
+     * @dataProvider dispatchMethodsShouldProvider
+     */
     public function testDispatchMethodsShouldSend(string $method, array $config, bool $shouldDispatch)
     {
         Mail::fake();
@@ -446,7 +448,9 @@ class AlertDispatcherTest extends TestCase
         ];
     }
 
-    #[\PHPUnit\Framework\Attributes\DataProvider('failedDispatchProvider')]
+    /**
+     * @dataProvider failedDispatchProvider
+     */
     public function testFailureInDispatchMethodDoesNotImpactOtherDispatchMethods(callable $expectedDispatchState, callable $expectedException)
     {
         Mail::fake();
