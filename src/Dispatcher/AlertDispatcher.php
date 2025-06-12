@@ -4,6 +4,7 @@ namespace Kevincobain2000\LaravelAlertNotifications\Dispatcher;
 
 use Illuminate\Support\Facades\Mail;
 use Kevincobain2000\LaravelAlertNotifications\Exceptions\AlertDispatchFailedException;
+use Kevincobain2000\LaravelAlertNotifications\Exceptions\AlertDispatchMethodFailedException;
 use Kevincobain2000\LaravelAlertNotifications\Mail\ExceptionOccurredMail;
 use Kevincobain2000\LaravelAlertNotifications\MicrosoftTeams\ExceptionOccurredCard;
 use Kevincobain2000\LaravelAlertNotifications\MicrosoftTeams\Teams;
@@ -77,8 +78,8 @@ class AlertDispatcher
                 $this->{"send" . ucfirst($method)}();
             } catch (Throwable $e) {
                 // If the dispatch method fails, we call the handler method to handle the exception
-                // and then throw a new AlertDispatchFailedException with the original exception.
-                $exceptions[] = AlertDispatchFailedException::{"{$method}Failed"}($e);
+                // and then throw a new AlertDispatchMethodFailedException with the original exception.
+                $exceptions[] = AlertDispatchMethodFailedException::methodFailed($method, $e);
             }
         }
 
@@ -88,11 +89,7 @@ class AlertDispatcher
         // the last one that was thrown. This is useful for debugging and understanding
         // what went wrong during the dispatch process.
         if (!empty($exceptions)) {
-            $finalException = null;
-            foreach ($exceptions as $exception) {
-                $finalException = new AlertDispatchFailedException($exception->getMessage(), $exception->getCode(), $finalException);
-            }
-            throw $finalException;
+            throw AlertDispatchFailedException::dispatchFailed($exceptions);
         }
 
         return true;
