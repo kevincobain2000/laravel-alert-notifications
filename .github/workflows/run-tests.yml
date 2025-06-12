@@ -23,6 +23,8 @@ jobs:
             laravel-version: '^10.0'
           - php-version: '7.3'
             laravel-version: '^11.0'
+          - php-version: '7.3'
+            laravel-version: '^12.0'
           - php-version: '7.4'
             laravel-version: '^9.33'
           - php-version: '7.4'
