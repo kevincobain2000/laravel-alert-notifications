@@ -32,15 +32,6 @@ class AlertDispatcherTest extends TestCase
         'laravel_alert_notifications.cache_prefix'                  => 'laravel-alert-notifications-test-',
     ];
 
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->alertHandlerMock = Mockery::mock(
-            AlertDispatcher::class
-        )->makePartial()->shouldAllowMockingProtectedMethods();
-    }
-
     public function testObjectCanBeInstantiated()
     {
         $this->assertInstanceOf(AlertDispatcher::class, new AlertDispatcher(new Exception('Test Exception'),));
