@@ -129,7 +129,7 @@ class Handler extends ExceptionHandler
 ### Config
 
 | config/env key                | purpose                                                                           |
-| :----------                   | :--------------                                                                   |
+| :---------------------------- | :-------------------------------------------------------------------------------- |
 | throttle_enabled              | (default true)  If false then library will send alerts without any throttling     |
 | throttle_duration_minutes     | (default 5 mins) If an exception has been notified                                |
 |                               | This will next notify after 5 mins when same exception occurs                     |
@@ -148,7 +148,7 @@ class Handler extends ExceptionHandler
 |                               | ``%ExceptionCode%``    => ``$e->getCode()``                                       |
 |                               | ``%ExceptionType%``    => ``$e->getType()``                                       |
 |                               | ``%ExceptionLevel%``   => ``current notification level``                          |
-|                               | ex. ``'subject' => 'Exception [%ExceptionType%] has ocurred``'                    |                                 |
+|                               | ex. ``'subject' => 'Exception [%ExceptionType%] has ocurred``'                    |
 | mail.#level#                  | Configs for each notification level                                               |
 |                               | notification levels refer to those defined in ``\Psr\Log\LogLevel``               |
 | mail.#level#.toAddress        | (default mail.to_address), #level# notification recipient e-mail                  |
@@ -158,7 +158,7 @@ class Handler extends ExceptionHandler
 | slack.enabled                 | (default true), false will not notify to slack                                    |
 | slack.webhook                 | (default null), null will not notify to slack                                     |
 | pager_duty.enabled            | (default true), false will not notify to pager duty                               |
-| pager_duty.events_v2_endpoint | (defautl https://events.pagerduty.com/v2/enqueue), should not need to change this |
+| pager_duty.events_v2_endpoint | (default https://events.pagerduty.com/v2/enqueue), should not need to change this |
 | pager_duty.integration_key    | (default null), null with not notify to pager duty                                |
 
 ### Samples
