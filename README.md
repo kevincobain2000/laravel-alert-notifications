@@ -165,19 +165,19 @@ class Handler extends ExceptionHandler
 
 #### Email
 
-<img src="https://i.imgur.com/MQFNK93.png" alt="Email">
+<img src="./docs/img/mail.png" alt="Email">
 
 #### Teams
 
-<img src="https://i.imgur.com/zl20RhQ.png" alt="Teams">
+<img src="./docs/img/microsoft-teams.png" alt="Teams">
 
 #### Slack
 
-<img src="https://i.imgur.com/jNoZLED.png" alt="Slack">
+<img src="./docs/img/slack.png" alt="Slack">
 
 #### Pager Duty
 
-
+<img src="./docs/img/pager-duty.png" alt="Pager Duty">
 
 ### References
 
