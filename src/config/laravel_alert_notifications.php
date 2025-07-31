@@ -53,6 +53,16 @@ return [
         'webhook'  => env('ALERT_NOTIFICATION_SLACK_WEBHOOK', null),
         'channel'  => env('ALERT_NOTIFICATION_SLACK_CHANNEL', null),
         'image'    => null,
+        'notification_color' => [
+            'emergency' => env('ALERT_NOTIFICATION_SLACK_NOTIFICATION_COLOR_EMERGENCY', '#ff0000'),
+            'alert'     => env('ALERT_NOTIFICATION_SLACK_NOTIFICATION_COLOR_ALERT', '#dc143c'),
+            'critical'  => env('ALERT_NOTIFICATION_SLACK_NOTIFICATION_COLOR_CRITICAL', '#ff4500'),
+            'error'     => env('ALERT_NOTIFICATION_SLACK_NOTIFICATION_COLOR_ERROR', '#b22222'),
+            'warning'   => env('ALERT_NOTIFICATION_SLACK_NOTIFICATION_COLOR_WARNING', '#ffd700'),
+            'notice'    => env('ALERT_NOTIFICATION_SLACK_NOTIFICATION_COLOR_NOTICE', '#add8e6'),
+            'info'      => env('ALERT_NOTIFICATION_SLACK_NOTIFICATION_COLOR_INFO', '#36a64f'),
+            'debug'     => env('ALERT_NOTIFICATION_SLACK_NOTIFICATION_COLOR_DEBUG', '#a9a9a9'),
+        ]
     ],
     'pager_duty' => [
         'enabled'            => true,

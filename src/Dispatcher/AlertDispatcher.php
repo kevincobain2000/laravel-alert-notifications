@@ -130,7 +130,7 @@ class AlertDispatcher
 
     protected function sendSlack(): void
     {
-        Slack::send(new ExceptionOccurredPayload($this->exception, $this->exceptionContext));
+        Slack::send(new ExceptionOccurredPayload($this->exception, $this->exceptionContext, $this->notificationLevel));
     }
 
     public function shouldPagerDuty(): bool
