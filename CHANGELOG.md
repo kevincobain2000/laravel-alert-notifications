@@ -17,7 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - GitHub Actions CI can install supported Laravel versions that Composer blocks due to published security advisories. ([#55](https://github.com/kevincobain2000/laravel-alert-notifications/pull/55))
-- Webhook alerts no longer fail when the payload contains invalid UTF-8 (for example in exception messages or URLs). JSON encoding now substitutes invalid sequences instead of failing silently and sending a rejected body to services such as PagerDuty.
+- Webhook alerts no longer fail when the payload contains invalid UTF-8 (for example in exception messages or URLs). JSON encoding now substitutes invalid sequences instead of failing silently and sending a rejected body to services such as PagerDuty. ([#56](https://github.com/kevincobain2000/laravel-alert-notifications/pull/56))
 
 ## [6.2] - 2025-07-31
 
