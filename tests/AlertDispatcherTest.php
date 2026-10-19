@@ -9,6 +9,7 @@ use Kevincobain2000\LaravelAlertNotifications\Exceptions\AlertDispatchMethodFail
 use Mail;
 use Mockery;
 use Orchestra\Testbench\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Throwable;
 
 class AlertDispatcherTest extends TestCase
@@ -187,6 +188,7 @@ class AlertDispatcherTest extends TestCase
     /**
      * @dataProvider dispatchMethodsShouldProvider
      */
+    #[DataProvider('dispatchMethodsShouldProvider')]
     public function testDispatchMethodsShouldSend(string $method, array $config, bool $shouldDispatch)
     {
         Mail::fake();
@@ -451,6 +453,7 @@ class AlertDispatcherTest extends TestCase
     /**
      * @dataProvider failedDispatchProvider
      */
+    #[DataProvider('failedDispatchProvider')]
     public function testFailureInDispatchMethodDoesNotImpactOtherDispatchMethods(callable $expectedDispatchState, callable $expectedException)
     {
         Mail::fake();
