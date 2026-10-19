@@ -9,8 +9,14 @@ use Kevincobain2000\LaravelAlertNotifications\Exceptions\AlertDispatchMethodFail
 use Mail;
 use Mockery;
 use Orchestra\Testbench\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Throwable;
 
+/**
+ * Data-provider tests below declare #[DataProvider] for PHPUnit 12+ and keep
+ * @dataProvider docblocks for PHPUnit 9–11. On PHP 7.x the attribute line is
+ * treated as a comment, so only the docblock is used there.
+ */
 class AlertDispatcherTest extends TestCase
 {
     protected $alertHandlerMock;
@@ -187,6 +193,7 @@ class AlertDispatcherTest extends TestCase
     /**
      * @dataProvider dispatchMethodsShouldProvider
      */
+    #[DataProvider('dispatchMethodsShouldProvider')]
     public function testDispatchMethodsShouldSend(string $method, array $config, bool $shouldDispatch)
     {
         Mail::fake();
@@ -451,6 +458,7 @@ class AlertDispatcherTest extends TestCase
     /**
      * @dataProvider failedDispatchProvider
      */
+    #[DataProvider('failedDispatchProvider')]
     public function testFailureInDispatchMethodDoesNotImpactOtherDispatchMethods(callable $expectedDispatchState, callable $expectedException)
     {
         Mail::fake();
