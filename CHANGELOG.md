@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [6.3] - 2026-10-19
+
+### Fixed
+
+- Webhook alerts no longer fail when the payload contains invalid UTF-8 (for example in exception messages or URLs). JSON encoding now substitutes invalid sequences instead of failing silently and sending a rejected body to services such as PagerDuty.
+
 ## [6.2] - 2025-07-31
 
 ### Changed
