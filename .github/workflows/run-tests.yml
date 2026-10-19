@@ -84,8 +84,10 @@ jobs:
           key: php-${{ matrix.php-version }}-laravel-${{ matrix.laravel-version }}-${{ matrix.dependency-version }}-composer-${{ hashFiles('**/composer.json') }}
           restore-keys: php-${{ matrix.php-version }}-laravel-${{ matrix.laravel-version }}-${{ matrix.dependency-version }}-composer-
 
+      # Every release of the older Laravel versions we support has published security
+      # advisories, which Composer would otherwise refuse to install
       - name: Install dependencies with composer
-        run: composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction
+        run: composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction --no-security-blocking
 
       - name: Setup Problem Matchers
         run: |
