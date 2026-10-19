@@ -12,9 +12,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Laravel 13 support. ([#53](https://github.com/kevincobain2000/laravel-alert-notifications/pull/53))
+- `CHANGELOG.md` in [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) format, with history for all tags through 6.2. ([#54](https://github.com/kevincobain2000/laravel-alert-notifications/pull/54))
 
 ### Fixed
 
+- GitHub Actions CI can install supported Laravel versions that Composer blocks due to published security advisories. ([#55](https://github.com/kevincobain2000/laravel-alert-notifications/pull/55))
 - Webhook alerts no longer fail when the payload contains invalid UTF-8 (for example in exception messages or URLs). JSON encoding now substitutes invalid sequences instead of failing silently and sending a rejected body to services such as PagerDuty.
 
 ## [6.2] - 2025-07-31
