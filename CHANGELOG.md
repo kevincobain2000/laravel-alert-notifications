@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [6.3] - 2026-10-19
 
+### Added
+
+- Laravel 13 support. ([#53](https://github.com/kevincobain2000/laravel-alert-notifications/pull/53))
+
 ### Fixed
 
 - Webhook alerts no longer fail when the payload contains invalid UTF-8 (for example in exception messages or URLs). JSON encoding now substitutes invalid sequences instead of failing silently and sending a rejected body to services such as PagerDuty.
