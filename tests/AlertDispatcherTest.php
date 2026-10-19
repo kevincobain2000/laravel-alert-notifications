@@ -12,6 +12,11 @@ use Orchestra\Testbench\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Throwable;
 
+/**
+ * Data-provider tests below declare #[DataProvider] for PHPUnit 12+ and keep
+ * @dataProvider docblocks for PHPUnit 9–11. On PHP 7.x the attribute line is
+ * treated as a comment, so only the docblock is used there.
+ */
 class AlertDispatcherTest extends TestCase
 {
     protected $alertHandlerMock;
